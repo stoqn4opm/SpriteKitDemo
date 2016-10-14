@@ -11,6 +11,8 @@
 static const NSInteger SpikeHitCategory = 1;
 static const NSInteger PlayerHitCategory = 2;
 
+static const NSInteger LevelTimeLength = 10; // in seconds
+
 @interface GameScene() <SKPhysicsContactDelegate>
 
 @property (nonatomic, strong) SKSpriteNode *backgroundNode;
@@ -62,16 +64,14 @@ static const NSInteger PlayerHitCategory = 2;
     self.topSpikes.physicsBody.collisionBitMask = PlayerHitCategory;
 }
 
--(void)didBeginContact:(SKPhysicsContact *)contact
-{
-    SKPhysicsBody *firstBody, *secondBody;
+-(void)didBeginContact:(SKPhysicsContact *)contact {
     
-    firstBody = contact.bodyA;
-    secondBody = contact.bodyB;
+    SKPhysicsBody *firstBody = contact.bodyA;
+    SKPhysicsBody *secondBody = contact.bodyB;
     
-    if(firstBody.categoryBitMask == SpikeHitCategory || secondBody.categoryBitMask == SpikeHitCategory)
-    {
-        [self stopGame];
+    if(firstBody.categoryBitMask == SpikeHitCategory || secondBody.categoryBitMask == SpikeHitCategory) {
+        [self stopLevel];
+        [self blinkPlayer];
     }
 }
 
@@ -95,13 +95,27 @@ static const NSInteger PlayerHitCategory = 2;
 
 #pragma mark - Helper Methods
 
+- (void)blinkPlayer {
+    SKAction *fadeOutAction = [SKAction fadeOutWithDuration:0.1];
+    SKAction *waitAction = [SKAction waitForDuration:0.5];
+    SKAction *fadeInAction = [SKAction fadeInWithDuration:0.1];
+    SKAction *blinkAnimation = [SKAction sequence:@[fadeOutAction, waitAction, fadeInAction, waitAction]];
+    
+    [self.player runAction:[SKAction repeatAction:blinkAnimation count:4]];
+}
+
 - (void)startLevel {
     
-    SKAction *waitAction = [SKAction waitForDuration:2];
-    SKAction *moveDownAction = [SKAction moveToY:1540 duration:10];
-    [self.backgroundNode runAction:[SKAction sequence:@[waitAction, moveDownAction]]];
-    
     GameScene __weak *weakSelf = self;
+    SKAction *waitAction = [SKAction waitForDuration:2];
+    SKAction *moveDownAction = [SKAction moveToY:1540 duration:LevelTimeLength];
+    [self.backgroundNode runAction:[SKAction sequence:@[waitAction, moveDownAction]] completion:^{
+        
+        SKAction *waitToHideBottomSpikes = [SKAction waitForDuration:LevelTimeLength - 1];
+        SKAction *hideDown = [SKAction moveByX:0 y:-200 duration:1];
+        [weakSelf.bottomSpikes runAction:[SKAction sequence:@[waitToHideBottomSpikes, hideDown]]];
+    }];
+    
     [self.player runAction:waitAction completion:^{
         weakSelf.player.physicsBody.affectedByGravity = YES;
         weakSelf.player.physicsBody.dynamic = YES;
@@ -113,9 +127,10 @@ static const NSInteger PlayerHitCategory = 2;
     
     SKAction *fadeIn = [SKAction fadeInWithDuration:1];
     [self.swipeIcon runAction:fadeIn];
+    
 }
 
-- (void)stopGame {
+- (void)stopLevel {
     [self.backgroundNode removeAllActions];
     self.player.physicsBody.affectedByGravity = NO;
     self.player.physicsBody.dynamic = NO;
