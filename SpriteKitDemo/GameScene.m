@@ -7,6 +7,7 @@
 //
 
 #import "GameScene.h"
+#import "GameManager.h"
 
 static const NSInteger SpikeHitCategory = 1;
 static const NSInteger PlayerHitCategory = 2;
@@ -71,7 +72,9 @@ static const NSInteger LevelTimeLength = 10; // in seconds
     
     if(firstBody.categoryBitMask == SpikeHitCategory || secondBody.categoryBitMask == SpikeHitCategory) {
         [self stopLevel];
-        [self blinkPlayer];
+        [self blinkPlayerWithCompletion:^{
+            [[GameManager sharedManager] loadGameOverScene];
+        }];
     }
 }
 
@@ -95,13 +98,13 @@ static const NSInteger LevelTimeLength = 10; // in seconds
 
 #pragma mark - Helper Methods
 
-- (void)blinkPlayer {
+- (void)blinkPlayerWithCompletion:(void (^)())completionBlock {
     SKAction *fadeOutAction = [SKAction fadeOutWithDuration:0.1];
     SKAction *waitAction = [SKAction waitForDuration:0.5];
     SKAction *fadeInAction = [SKAction fadeInWithDuration:0.1];
     SKAction *blinkAnimation = [SKAction sequence:@[fadeOutAction, waitAction, fadeInAction, waitAction]];
-    
-    [self.player runAction:[SKAction repeatAction:blinkAnimation count:4]];
+
+    [self.player runAction:[SKAction repeatAction:blinkAnimation count:4] completion:completionBlock];
 }
 
 - (void)startLevel {
