@@ -18,6 +18,8 @@
 		32565A551DB11B160063B6FD /* GameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32565A541DB11B160063B6FD /* GameOverScene.sks */; };
 		32565A591DB11BA60063B6FD /* GameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A581DB11BA60063B6FD /* GameOverScene.m */; };
 		32565A5D1DB11D060063B6FD /* GameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A5C1DB11D060063B6FD /* GameManager.m */; };
+		32565A621DB1219E0063B6FD /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32565A611DB1219E0063B6FD /* MainMenu.sks */; };
+		32565A651DB122EC0063B6FD /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A641DB122EC0063B6FD /* MainMenu.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,9 @@
 		32565A581DB11BA60063B6FD /* GameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverScene.m; sourceTree = "<group>"; };
 		32565A5B1DB11D060063B6FD /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
 		32565A5C1DB11D060063B6FD /* GameManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameManager.m; sourceTree = "<group>"; };
+		32565A611DB1219E0063B6FD /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
+		32565A631DB122EC0063B6FD /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
+		32565A641DB122EC0063B6FD /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenu.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +80,7 @@
 				32565A381DB0D47E0063B6FD /* AppDelegate.m */,
 				32565A5B1DB11D060063B6FD /* GameManager.h */,
 				32565A5C1DB11D060063B6FD /* GameManager.m */,
+				32565A5E1DB121550063B6FD /* Main Menu */,
 				32565A5A1DB11BAF0063B6FD /* Game Over */,
 				32565A561DB11B230063B6FD /* Game Level */,
 				32565A411DB0D47E0063B6FD /* GameViewController.h */,
@@ -114,6 +120,16 @@
 				32565A581DB11BA60063B6FD /* GameOverScene.m */,
 			);
 			name = "Game Over";
+			sourceTree = "<group>";
+		};
+		32565A5E1DB121550063B6FD /* Main Menu */ = {
+			isa = PBXGroup;
+			children = (
+				32565A611DB1219E0063B6FD /* MainMenu.sks */,
+				32565A631DB122EC0063B6FD /* MainMenu.h */,
+				32565A641DB122EC0063B6FD /* MainMenu.m */,
+			);
+			name = "Main Menu";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32565A461DB0D47E0063B6FD /* Main.storyboard in Resources */,
+				32565A621DB1219E0063B6FD /* MainMenu.sks in Resources */,
 				32565A3B1DB0D47E0063B6FD /* GameScene.sks in Resources */,
 				32565A481DB0D47E0063B6FD /* Assets.xcassets in Resources */,
 				32565A551DB11B160063B6FD /* GameOverScene.sks in Resources */,
@@ -189,6 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32565A651DB122EC0063B6FD /* MainMenu.m in Sources */,
 				32565A591DB11BA60063B6FD /* GameOverScene.m in Sources */,
 				32565A5D1DB11D060063B6FD /* GameManager.m in Sources */,
 				32565A431DB0D47E0063B6FD /* GameViewController.m in Sources */,

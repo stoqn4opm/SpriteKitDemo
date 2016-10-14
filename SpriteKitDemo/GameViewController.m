@@ -16,7 +16,7 @@
     [super viewDidLoad];
 
     [[GameManager sharedManager] setSpriteKitView:(SKView *)self.view];
-    [[GameManager sharedManager] loadLevelScene];
+    [[GameManager sharedManager] loadMainMenuScene];
 }
 
 - (BOOL)shouldAutorotate {

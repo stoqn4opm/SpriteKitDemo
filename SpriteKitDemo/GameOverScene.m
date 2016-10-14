@@ -7,6 +7,7 @@
 //
 
 #import "GameOverScene.h"
+#import "GameManager.h"
 
 @interface GameOverScene()
 
@@ -22,7 +23,7 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     SKAction *fadeOutAction = [SKAction fadeOutWithDuration:2];
     [self.gameOver runAction:fadeOutAction completion:^{
-        
+        [[GameManager sharedManager] loadMainMenuScene];
     }];
 }
 
