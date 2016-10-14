@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "spikes-japan.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "spikes.png",
       "scale" : "2x"
     },
     {

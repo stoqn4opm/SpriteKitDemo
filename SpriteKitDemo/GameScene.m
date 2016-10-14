@@ -8,13 +8,19 @@
 
 #import "GameScene.h"
 
-@interface GameScene()
+static const NSInteger SpikeHitCategory = 1;
+static const NSInteger PlayerHitCategory = 2;
+
+@interface GameScene() <SKPhysicsContactDelegate>
 
 @property (nonatomic, strong) SKSpriteNode *backgroundNode;
 @property (strong, nonatomic) SKSpriteNode *player;
 @property (strong, nonatomic) SKSpriteNode *swipeControl;
 @property (strong, nonatomic) SKSpriteNode *swipeIcon;
 @property (strong, nonatomic) SKLabelNode *swipeStartLabel;
+
+@property (strong, nonatomic) SKSpriteNode *topSpikes;
+@property (strong, nonatomic) SKSpriteNode *bottomSpikes;
 
 @end
 
@@ -30,6 +36,43 @@
     self.swipeControl = (SKSpriteNode *)[self childNodeWithName:@"swipeControl"];
     self.swipeIcon = (SKSpriteNode *)[self.swipeControl childNodeWithName:@"swipeIcon"];
     self.swipeStartLabel = (SKLabelNode *)[self.swipeControl childNodeWithName:@"gameStart"];
+    
+    self.topSpikes = (SKSpriteNode *)[self childNodeWithName:@"topSpikes"];
+    self.bottomSpikes = (SKSpriteNode *)[self childNodeWithName:@"bottomSpikes"];
+
+    self.backgroundColor = [UIColor blackColor];
+    self.physicsWorld.contactDelegate = self;
+    
+    [self setupCollisionDetection];
+}
+
+#pragma mark - Collision Detecting
+
+- (void)setupCollisionDetection {
+    self.player.physicsBody.categoryBitMask = PlayerHitCategory;
+    self.player.physicsBody.contactTestBitMask = SpikeHitCategory;
+    self.player.physicsBody.collisionBitMask = SpikeHitCategory;
+    
+    self.bottomSpikes.physicsBody.categoryBitMask = SpikeHitCategory;
+    self.bottomSpikes.physicsBody.contactTestBitMask = PlayerHitCategory;
+    self.bottomSpikes.physicsBody.collisionBitMask = PlayerHitCategory;
+    
+    self.topSpikes.physicsBody.categoryBitMask = SpikeHitCategory;
+    self.topSpikes.physicsBody.contactTestBitMask = PlayerHitCategory;
+    self.topSpikes.physicsBody.collisionBitMask = PlayerHitCategory;
+}
+
+-(void)didBeginContact:(SKPhysicsContact *)contact
+{
+    SKPhysicsBody *firstBody, *secondBody;
+    
+    firstBody = contact.bodyA;
+    secondBody = contact.bodyB;
+    
+    if(firstBody.categoryBitMask == SpikeHitCategory || secondBody.categoryBitMask == SpikeHitCategory)
+    {
+        [self stopGame];
+    }
 }
 
 #pragma mark - Touch Handling
@@ -61,6 +104,7 @@
     GameScene __weak *weakSelf = self;
     [self.player runAction:waitAction completion:^{
         weakSelf.player.physicsBody.affectedByGravity = YES;
+        weakSelf.player.physicsBody.dynamic = YES;
         _gameIsStarted = YES;
     }];
     
@@ -69,6 +113,13 @@
     
     SKAction *fadeIn = [SKAction fadeInWithDuration:1];
     [self.swipeIcon runAction:fadeIn];
+}
+
+- (void)stopGame {
+    [self.backgroundNode removeAllActions];
+    self.player.physicsBody.affectedByGravity = NO;
+    self.player.physicsBody.dynamic = NO;
+    _gameIsStarted = NO;
 }
 
 - (BOOL)isTouchInSwipeControl:(UITouch *)touch {
