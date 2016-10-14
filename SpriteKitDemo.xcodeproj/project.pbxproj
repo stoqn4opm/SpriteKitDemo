@@ -10,7 +10,6 @@
 		32565A361DB0D47E0063B6FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A351DB0D47E0063B6FD /* main.m */; };
 		32565A391DB0D47E0063B6FD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A381DB0D47E0063B6FD /* AppDelegate.m */; };
 		32565A3B1DB0D47E0063B6FD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32565A3A1DB0D47E0063B6FD /* GameScene.sks */; };
-		32565A3D1DB0D47E0063B6FD /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32565A3C1DB0D47E0063B6FD /* Actions.sks */; };
 		32565A401DB0D47E0063B6FD /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A3F1DB0D47E0063B6FD /* GameScene.m */; };
 		32565A431DB0D47E0063B6FD /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A421DB0D47E0063B6FD /* GameViewController.m */; };
 		32565A461DB0D47E0063B6FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32565A441DB0D47E0063B6FD /* Main.storyboard */; };
@@ -24,7 +23,6 @@
 		32565A371DB0D47E0063B6FD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		32565A381DB0D47E0063B6FD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		32565A3A1DB0D47E0063B6FD /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		32565A3C1DB0D47E0063B6FD /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		32565A3E1DB0D47E0063B6FD /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		32565A3F1DB0D47E0063B6FD /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
 		32565A411DB0D47E0063B6FD /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 				32565A371DB0D47E0063B6FD /* AppDelegate.h */,
 				32565A381DB0D47E0063B6FD /* AppDelegate.m */,
 				32565A3A1DB0D47E0063B6FD /* GameScene.sks */,
-				32565A3C1DB0D47E0063B6FD /* Actions.sks */,
 				32565A3E1DB0D47E0063B6FD /* GameScene.h */,
 				32565A3F1DB0D47E0063B6FD /* GameScene.m */,
 				32565A411DB0D47E0063B6FD /* GameViewController.h */,
@@ -152,7 +149,6 @@
 				32565A3B1DB0D47E0063B6FD /* GameScene.sks in Resources */,
 				32565A481DB0D47E0063B6FD /* Assets.xcassets in Resources */,
 				32565A4B1DB0D47E0063B6FD /* LaunchScreen.storyboard in Resources */,
-				32565A3D1DB0D47E0063B6FD /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
