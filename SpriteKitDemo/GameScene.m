@@ -9,8 +9,9 @@
 #import "GameScene.h"
 #import "GameManager.h"
 
-static const NSInteger SpikeHitCategory = 1;
-static const NSInteger PlayerHitCategory = 2;
+static const NSInteger SpikeHitCategory     = 0b1;
+static const NSInteger PlayerHitCategory    = 0b10;
+static const NSInteger LevelEndCategory     = 0b100;
 
 static const NSInteger LevelTimeLength = 10; // in seconds
 
@@ -25,6 +26,7 @@ static const NSInteger LevelTimeLength = 10; // in seconds
 @property (strong, nonatomic) SKSpriteNode *topSpikes;
 @property (strong, nonatomic) SKSpriteNode *bottomSpikes;
 
+@property (strong, nonatomic) SKSpriteNode *endLabel;
 @end
 
 @implementation GameScene {
@@ -43,6 +45,8 @@ static const NSInteger LevelTimeLength = 10; // in seconds
     self.topSpikes = (SKSpriteNode *)[self childNodeWithName:@"topSpikes"];
     self.bottomSpikes = (SKSpriteNode *)[self childNodeWithName:@"bottomSpikes"];
 
+    self.endLabel = (SKSpriteNode *)[self.endLabel childNodeWithName:@"end"];
+    
     self.backgroundColor = [UIColor blackColor];
     self.physicsWorld.contactDelegate = self;
     
@@ -53,8 +57,8 @@ static const NSInteger LevelTimeLength = 10; // in seconds
 
 - (void)setupCollisionDetection {
     self.player.physicsBody.categoryBitMask = PlayerHitCategory;
-    self.player.physicsBody.contactTestBitMask = SpikeHitCategory;
-    self.player.physicsBody.collisionBitMask = SpikeHitCategory;
+    self.player.physicsBody.contactTestBitMask = SpikeHitCategory | LevelEndCategory;
+    self.player.physicsBody.collisionBitMask = SpikeHitCategory | LevelEndCategory;
     
     self.bottomSpikes.physicsBody.categoryBitMask = SpikeHitCategory;
     self.bottomSpikes.physicsBody.contactTestBitMask = PlayerHitCategory;
@@ -63,6 +67,10 @@ static const NSInteger LevelTimeLength = 10; // in seconds
     self.topSpikes.physicsBody.categoryBitMask = SpikeHitCategory;
     self.topSpikes.physicsBody.contactTestBitMask = PlayerHitCategory;
     self.topSpikes.physicsBody.collisionBitMask = PlayerHitCategory;
+    
+    self.endLabel.physicsBody.categoryBitMask = LevelEndCategory;
+    self.endLabel.physicsBody.contactTestBitMask = PlayerHitCategory;
+    self.endLabel.physicsBody.collisionBitMask = PlayerHitCategory;
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
@@ -75,6 +83,9 @@ static const NSInteger LevelTimeLength = 10; // in seconds
         [self blinkPlayerWithCompletion:^{
             [[GameManager sharedManager] loadGameOverScene];
         }];
+    }
+    else if (firstBody.categoryBitMask == LevelEndCategory || secondBody.categoryBitMask == LevelEndCategory) {
+        [[GameManager sharedManager] loadMainMenuScene];
     }
 }
 
