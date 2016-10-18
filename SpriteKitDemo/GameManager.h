@@ -18,5 +18,6 @@
 - (void)loadMainMenuScene;
 - (void)loadLevelScene;
 - (void)loadGameOverScene;
+- (void)loadDynamicLevelScene;
 
 @end

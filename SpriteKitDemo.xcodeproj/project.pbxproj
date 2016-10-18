@@ -20,6 +20,7 @@
 		32565A5D1DB11D060063B6FD /* GameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A5C1DB11D060063B6FD /* GameManager.m */; };
 		32565A621DB1219E0063B6FD /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32565A611DB1219E0063B6FD /* MainMenu.sks */; };
 		32565A651DB122EC0063B6FD /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A641DB122EC0063B6FD /* MainMenu.m */; };
+		325833961DB4F1A600D1B154 /* DynamicLevelScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 325833951DB4F1A600D1B154 /* DynamicLevelScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,8 @@
 		32565A611DB1219E0063B6FD /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		32565A631DB122EC0063B6FD /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
 		32565A641DB122EC0063B6FD /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenu.m; sourceTree = "<group>"; };
+		325833941DB4F1A600D1B154 /* DynamicLevelScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicLevelScene.h; sourceTree = "<group>"; };
+		325833951DB4F1A600D1B154 /* DynamicLevelScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicLevelScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +86,9 @@
 				32565A5E1DB121550063B6FD /* Main Menu */,
 				32565A5A1DB11BAF0063B6FD /* Game Over */,
 				32565A561DB11B230063B6FD /* Game Level */,
-				32565A411DB0D47E0063B6FD /* GameViewController.h */,
 				32565A421DB0D47E0063B6FD /* GameViewController.m */,
+				32565A411DB0D47E0063B6FD /* GameViewController.h */,
+				325833931DB4F18100D1B154 /* Dynamic Level */,
 				32565A441DB0D47E0063B6FD /* Main.storyboard */,
 				32565A471DB0D47E0063B6FD /* Assets.xcassets */,
 				32565A491DB0D47E0063B6FD /* LaunchScreen.storyboard */,
@@ -130,6 +134,15 @@
 				32565A641DB122EC0063B6FD /* MainMenu.m */,
 			);
 			name = "Main Menu";
+			sourceTree = "<group>";
+		};
+		325833931DB4F18100D1B154 /* Dynamic Level */ = {
+			isa = PBXGroup;
+			children = (
+				325833941DB4F1A600D1B154 /* DynamicLevelScene.h */,
+				325833951DB4F1A600D1B154 /* DynamicLevelScene.m */,
+			);
+			name = "Dynamic Level";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32565A651DB122EC0063B6FD /* MainMenu.m in Sources */,
+				325833961DB4F1A600D1B154 /* DynamicLevelScene.m in Sources */,
 				32565A591DB11BA60063B6FD /* GameOverScene.m in Sources */,
 				32565A5D1DB11D060063B6FD /* GameManager.m in Sources */,
 				32565A431DB0D47E0063B6FD /* GameViewController.m in Sources */,

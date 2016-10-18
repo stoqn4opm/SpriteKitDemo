@@ -8,7 +8,7 @@
 
 #import "GameManager.h"
 #import "GameScene.h"
-
+#import "DynamicLevelScene.h"
 
 @implementation GameManager
 
@@ -39,6 +39,13 @@
 
 - (void)loadMainMenuScene {
     [self loadSceneWithName:@"MainMenu"];
+}
+
+- (void)loadDynamicLevelScene {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    DynamicLevelScene *dLevel = [[DynamicLevelScene alloc] initWithSceneSize:CGSizeMake(screenRect.size.width, screenRect.size.height)  levelLength:15 levelSpeed:LevelSpeedFast];
+    [self.spriteKitView presentScene:dLevel];
+    dLevel.scaleMode = SKSceneScaleModeAspectFit;
 }
 
 - (void)loadSceneWithName:(NSString *)sceneName {
