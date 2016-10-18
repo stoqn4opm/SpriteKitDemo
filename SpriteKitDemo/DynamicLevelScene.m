@@ -39,7 +39,7 @@ NSUInteger const ObstacleFreeZone = 220;
         [self createCameraNode];
         [self generateStaticBlockObtacles];
         [self beginAnimation];
-        self.backgroundColor = [UIColor blueColor];
+        self.backgroundColor = [UIColor blackColor];
     }
     return self;
 }
@@ -89,30 +89,38 @@ NSUInteger const ObstacleFreeZone = 220;
     NSNumber *horizontalRows = [playableAreaRows valueForKey:@"horRows"];
     NSNumber *verticalRows = [playableAreaRows valueForKey:@"verRows"];
 
-    NSArray<NSNumber *> *randomlyPopulatedAvailabillityOfBlocksOnVerticalRows = [self randomlyPopulateStaticBlocksForNumberOfRows:verticalRows evenOnly:YES];
+    NSArray<NSNumber *> *randomlyPopulatedAvailabillityOfBlocksOnVerticalRows = [self randomlyPopulateStaticBlocksForVerticalNumberOfRows:verticalRows];
     
-    for (NSUInteger verRow = 0; verRow < randomlyPopulatedAvailabillityOfBlocksOnVerticalRows.count; verRow++) {
+    for (NSUInteger verRow = 0; verRow < randomlyPopulatedAvailabillityOfBlocksOnVerticalRows.count - 1; verRow++) {
         if (!randomlyPopulatedAvailabillityOfBlocksOnVerticalRows[verRow].boolValue) {
             continue;
         }
-        NSArray<NSNumber *> *randomlyPopulatedAvailabillityOfBlocksOnHorizontalRows = [self randomlyPopulateStaticBlocksForNumberOfRows:horizontalRows evenOnly:NO];
+        
+        NSArray<NSNumber *> *randomlyPopulatedAvailabillityOfBlocksOnHorizontalRows =  [self randomlyPopulateStaticBlocksForHorizontalNumberOfRows:horizontalRows];
         for (NSUInteger horRow = 0; horRow < randomlyPopulatedAvailabillityOfBlocksOnHorizontalRows.count; horRow++) {
             if (randomlyPopulatedAvailabillityOfBlocksOnHorizontalRows[horRow].integerValue) {
                 [self drawStaticBlockAtVerticalRow:verRow horizontalRow:horRow];
             }
         }
     }
+    
+    // Last Line handling
+    
+    for (NSUInteger horRow = 0; horRow < horizontalRows.integerValue; horRow++) {
+            [self drawStaticBlockAtVerticalRow:verticalRows.integerValue - 1 horizontalRow:horRow];
+    }
+    
 }
 
-- (NSArray<NSNumber *> *)randomlyPopulateStaticBlocksForNumberOfRows:(NSNumber *)rows evenOnly:(BOOL)evensOnly {
+- (NSArray<NSNumber *> *)randomlyPopulateStaticBlocksForVerticalNumberOfRows:(NSNumber *)rows {
     NSMutableArray<NSNumber *> *result = [NSMutableArray new];
-    for (NSUInteger i = 0; i < rows.integerValue; i++) {
+    
+    for (NSUInteger i = 0; i < rows.integerValue - 5; i++) {
         
         // the posibillity of adding a block is 7/2
         uint32_t shouldAddBlock = arc4random_uniform(10);
-        BOOL shouldAddBlockOnGivenPlace = YES;// shouldAddBlock >= 1 && shouldAddBlock <= 7;
+        BOOL shouldAddBlockOnGivenPlace = shouldAddBlock >= 1 && shouldAddBlock <= 7;
         
-        if (evensOnly) {
             if (i % 2 == 0) {
                 if (shouldAddBlockOnGivenPlace) {
                     [result addObject:@YES];
@@ -122,15 +130,43 @@ NSUInteger const ObstacleFreeZone = 220;
             } else {
                 [result addObject:@NO];
             }
+        
+    }
+    [result addObject:@NO];
+    [result addObject:@NO];
+    [result addObject:@NO];
+    [result addObject:@NO];
+    [result addObject:@YES];
+    
+    return [NSArray arrayWithArray:result];
+}
+
+- (NSArray<NSNumber *> *)randomlyPopulateStaticBlocksForHorizontalNumberOfRows:(NSNumber *)rows {
+    NSMutableArray<NSNumber *> *result = [NSMutableArray new];
+    
+    BOOL thereIsAtLeastOneHole = NO;
+    for (NSUInteger i = 0; i < rows.integerValue; i++) {
+        
+        // the posibillity of adding a block is 7/2
+        uint32_t shouldAddBlock = arc4random_uniform(10);
+        BOOL shouldAddBlockOnGivenPlace = shouldAddBlock >= 1 && shouldAddBlock <= 7;
+        
+        
+        if (shouldAddBlockOnGivenPlace) {
+            [result addObject:@YES];
         } else {
-            if (shouldAddBlockOnGivenPlace) {
-                [result addObject:@YES];
-            } else {
-                [result addObject:@NO];
-            }
+            [result addObject:@NO];
+            thereIsAtLeastOneHole = YES;
         }
         
     }
+    
+    // check and clear random block if all spaces are filled
+    if (!thereIsAtLeastOneHole) {
+        uint32_t placeToClearBlock = arc4random_uniform((uint32_t)result.count);
+        [result replaceObjectAtIndex:placeToClearBlock withObject:@NO];
+    }
+    
     return [NSArray arrayWithArray:result];
 }
 
@@ -153,13 +189,17 @@ NSUInteger const ObstacleFreeZone = 220;
 
 - (void)drawStaticBlockAtVerticalRow:(NSUInteger)verRow horizontalRow:(NSUInteger)horRow {
     
-    NSLog(@"drawing block at ver:%ld hor:%ld", verRow, horRow);
-    SKTexture *blockTexture = [SKTexture textureWithImageNamed:@"block"];
-    SKSpriteNode *staticBlock = [SKSpriteNode spriteNodeWithTexture:blockTexture size:CGSizeMake(self.blockSize, self.blockSize)];
-    staticBlock.anchorPoint = CGPointMake(0, 0);
-    staticBlock.position = CGPointMake(horRow * self.blockSize, self.frame.size.height - self.blockSize - verRow * self.blockSize - ObstacleFreeZone);
+//    NSLog(@"drawing block at ver:%ld hor:%ld", verRow, horRow);
+    SKTexture *blockTexture = [SKTexture textureWithImageNamed:@"grassPlatform"];
+    SKShapeNode *shape = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(self.blockSize, self.blockSize) cornerRadius:self.blockSize / 4];
+    shape.fillTexture = blockTexture;
+    shape.fillColor = [UIColor whiteColor];
     
-    [self.rootNode addChild:staticBlock];
+    CGFloat xCoordinate = horRow * self.blockSize + self.blockSize / 2.;
+    CGFloat yCoordinate = self.frame.size.height - self.blockSize - verRow * self.blockSize - ObstacleFreeZone + self.blockSize / 2.;
+    shape.position = CGPointMake(xCoordinate, yCoordinate);
+    
+    [self.rootNode addChild:shape];
 }
 
 
