@@ -318,6 +318,21 @@ static NSUInteger const BlocksBitMask           = 0b10;
     [self centerOnCameraNode];
 }
 
+#pragma mark - User Input handling 
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = touches.anyObject;
+    [self moveMainCharacterToTouch:touch];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//    [[self mainCharacter] removeAllActions];
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [[self mainCharacter] removeAllActions];
+}
+
 #pragma mark - Main Character
 
 - (SKSpriteNode *)mainCharacter {
@@ -340,17 +355,9 @@ static NSUInteger const BlocksBitMask           = 0b10;
     return _mainCharacter;
 }
 
-- (void)mainCharacterAnimateWalkLeft {
-    [self mainCharacterAnimateWalkLeftDirection:YES];
-}
-
-- (void)mainCharacterAnimateWalkRight {
-    [self mainCharacterAnimateWalkLeftDirection:NO];
-}
-
-- (void)mainCharacterAnimateWalkLeftDirection:(BOOL)leftDirection {
+- (void)mainCharacterAnimateWalkLeftNotRightDirection:(BOOL)leftDirection {
     SKSpriteNode *character = [self mainCharacter];
-    
+    [character removeAllActions];
     NSArray<NSString *> *textureNames = leftDirection ? @[@"left1", @"left2", @"left3", @"left4"] : @[@"right1", @"right2", @"right3", @"right4"];
     
     SKAction *leftMove1 = [SKAction runBlock:^{
@@ -369,6 +376,17 @@ static NSUInteger const BlocksBitMask           = 0b10;
     SKAction *wholeAnimation = [SKAction sequence:@[leftMove1, waitAction, leftMove2, waitAction, leftMove3, waitAction, leftMove4, waitAction]];
     SKAction *repeatWholeAnimationAction = [SKAction repeatActionForever:wholeAnimation];
     [character runAction:repeatWholeAnimationAction];
+}
+
+- (void)moveMainCharacterToTouch:(UITouch *)touch {
+    CGPoint touchLocation = [touch locationInNode:self];
+    BOOL shouldAnimateLeft = touchLocation.x < self.mainCharacter.frame.origin.x;
+    [self mainCharacterAnimateWalkLeftNotRightDirection:shouldAnimateLeft];
+    
+    CGFloat walkDuration = fabs(touchLocation.x - self.mainCharacter.frame.origin.x);
+    [self.mainCharacter runAction:[SKAction moveToX:touchLocation.x duration:walkDuration * 0.008] completion:^{
+        [[self mainCharacter] removeAllActions];
+    }];
 }
 
 @end
