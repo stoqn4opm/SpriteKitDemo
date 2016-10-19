@@ -43,7 +43,7 @@
 
 - (void)loadDynamicLevelScene {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    DynamicLevelScene *dLevel = [[DynamicLevelScene alloc] initWithSceneSize:CGSizeMake(screenRect.size.width, screenRect.size.height)  levelLength:12 levelSpeed:LevelSpeedFast levelDificulty:5];
+    DynamicLevelScene *dLevel = [[DynamicLevelScene alloc] initWithSceneSize:CGSizeMake(screenRect.size.width, screenRect.size.height)  levelLength:12 levelSpeed:LevelSpeedFast levelDificulty:6];
     [self.spriteKitView presentScene:dLevel];
     dLevel.scaleMode = SKSceneScaleModeAspectFit;
 }

@@ -19,6 +19,7 @@ NSUInteger const ObstacleFreeZone = 220;
 @property (strong, nonatomic) SKSpriteNode *rootNode;
 @property (strong, nonatomic) SKNode *cameraNode;
 @property (assign, nonatomic) CGFloat blockSize;
+@property (assign, nonatomic) NSUInteger fillProbability;
 @end
 
 @implementation DynamicLevelScene
@@ -31,6 +32,7 @@ NSUInteger const ObstacleFreeZone = 220;
         self.levelLength = levelLength;
         self.levelSpeed = speed;
         self.blockSize = self.size.width / 10.;
+        self.fillProbability = dificultyLevel;
         [self createLevelRootNode];
         [self createCameraNode];
         [self generateStaticBlockObtacles];
@@ -194,8 +196,7 @@ NSUInteger const ObstacleFreeZone = 220;
         
         // the posibillity of adding a block is 7/2
         uint32_t shouldAddBlock = arc4random_uniform(10);
-        BOOL shouldAddBlockOnGivenPlace = shouldAddBlock >= 1 && shouldAddBlock <= 7;
-        
+        BOOL shouldAddBlockOnGivenPlace = shouldAddBlock <= self.fillProbability;
         
         if (shouldAddBlockOnGivenPlace) {
             [result addObject:@YES];
@@ -211,6 +212,8 @@ NSUInteger const ObstacleFreeZone = 220;
         uint32_t placeToClearBlock = arc4random_uniform((uint32_t)result.count);
         [result replaceObjectAtIndex:placeToClearBlock withObject:@NO];
     }
+    
+    
     
     return [NSArray arrayWithArray:result];
 }
