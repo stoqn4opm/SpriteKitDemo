@@ -25,11 +25,7 @@ NSUInteger const ObstacleFreeZone = 220;
 
 #pragma mark - Initialization Code
 
-- (void)didMoveToView:(SKView *)view {
-    
-}
-
-- (instancetype)initWithSceneSize:(CGSize)size levelLength:(CGFloat)levelLength levelSpeed:(LevelSpeed)speed {
+- (instancetype)initWithSceneSize:(CGSize)size levelLength:(CGFloat)levelLength levelSpeed:(LevelSpeed)speed levelDificulty:(NSUInteger)dificultyLevel {
     self = [super initWithSize:size];
     if (self) {
         self.levelLength = levelLength;
@@ -38,10 +34,59 @@ NSUInteger const ObstacleFreeZone = 220;
         [self createLevelRootNode];
         [self createCameraNode];
         [self generateStaticBlockObtacles];
-        [self beginAnimation];
-        self.backgroundColor = [UIColor blackColor];
+        
+        DynamicLevelScene __weak *weakSelf = self;
+        [self beginStartCountDownWithCompletion:^{
+            [weakSelf beginAnimation];
+        }];
+        self.backgroundColor = [UIColor colorWithRed:92/255. green:147/255. blue:252/255. alpha:1];
     }
     return self;
+}
+
+- (void)beginStartCountDownWithCompletion:(void (^)())completionBlock {
+    
+    // initializing labelNode
+    SKLabelNode *countDownLabel = [SKLabelNode labelNodeWithFontNamed:@"3Dventure"];
+    countDownLabel.text = @"3";
+    countDownLabel.position = CGPointMake(self.frame.size.width / 2., self.frame.size.height * 8. / 10.);
+    countDownLabel.fontSize = 125;
+    
+    // setting up actions
+    SKAction *waitAction = [SKAction waitForDuration:1];
+    SKAction *scaleDownAction = [SKAction scaleTo:0 duration:0.5];
+    SKAction *fadeOutAction = [SKAction fadeOutWithDuration:0.5];
+    SKAction *groupActions = [SKAction group:@[scaleDownAction, fadeOutAction]];
+    
+    [countDownLabel runAction:[SKAction sequence:@[waitAction, groupActions]] completion:^{
+        
+        countDownLabel.text = @"2";
+        countDownLabel.xScale = countDownLabel.yScale = 1;
+        countDownLabel.alpha = 1;
+        
+        [countDownLabel runAction:[SKAction sequence:@[waitAction, groupActions]] completion:^{
+            
+            countDownLabel.text = @"1";
+            countDownLabel.xScale = countDownLabel.yScale = 1;
+            countDownLabel.alpha = 1;
+            
+            [countDownLabel runAction:[SKAction sequence:@[waitAction, groupActions]] completion:^{
+                
+                countDownLabel.text = @"START!";
+                countDownLabel.xScale = countDownLabel.yScale = 1;
+                countDownLabel.alpha = 1;
+                countDownLabel.fontSize = 80;
+                [countDownLabel runAction:[SKAction sequence:@[waitAction, fadeOutAction]] completion:^{
+                    [countDownLabel removeFromParent];
+                    if (completionBlock) {
+                        completionBlock();
+                    }
+                }];
+            }];
+        }];
+    }];
+    
+    [self addChild:countDownLabel];
 }
 
 - (void)beginAnimation {

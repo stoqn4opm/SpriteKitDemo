@@ -15,6 +15,6 @@ typedef NS_ENUM(NSUInteger, LevelSpeed) {
 };
 
 @interface DynamicLevelScene : SKScene
-- (instancetype)initWithSceneSize:(CGSize)size levelLength:(CGFloat)levelLength levelSpeed:(LevelSpeed)speed;
+- (instancetype)initWithSceneSize:(CGSize)size levelLength:(CGFloat)levelLength levelSpeed:(LevelSpeed)speed levelDificulty:(NSUInteger)dificultyLevel;
 
 @end
