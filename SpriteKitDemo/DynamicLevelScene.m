@@ -8,6 +8,10 @@
 
 #import "DynamicLevelScene.h"
 
+#define SINGLE_BLOCK_FLAG @1
+#define NO_BLOCK_FLAG @0
+#define DYNAMIC_BLOCK_FLAG @2
+
 NSUInteger const ObstacleFreeZone = 220;
 
 
@@ -145,18 +149,19 @@ NSUInteger const ObstacleFreeZone = 220;
         
         NSArray<NSNumber *> *randomlyPopulatedAvailabillityOfBlocksOnHorizontalRows =  [self randomlyPopulateStaticBlocksForHorizontalNumberOfRows:horizontalRows];
         for (NSUInteger horRow = 0; horRow < randomlyPopulatedAvailabillityOfBlocksOnHorizontalRows.count; horRow++) {
-            if (randomlyPopulatedAvailabillityOfBlocksOnHorizontalRows[horRow].integerValue) {
-                [self drawStaticBlockAtVerticalRow:verRow horizontalRow:horRow];
+            if ([randomlyPopulatedAvailabillityOfBlocksOnHorizontalRows[horRow] isEqualToNumber:SINGLE_BLOCK_FLAG]) {
+                [self drawStaticBlockAtVerticalRow:verRow horizontalRow:horRow blockIsDynamic:NO];
+            }
+            else if ([randomlyPopulatedAvailabillityOfBlocksOnHorizontalRows[horRow] isEqualToNumber:DYNAMIC_BLOCK_FLAG]) {
+                [self drawStaticBlockAtVerticalRow:verRow horizontalRow:horRow blockIsDynamic:YES];
             }
         }
     }
     
     // Last Line handling
-    
     for (NSUInteger horRow = 0; horRow < horizontalRows.integerValue; horRow++) {
-            [self drawStaticBlockAtVerticalRow:verticalRows.integerValue - 1 horizontalRow:horRow];
+            [self drawStaticBlockAtVerticalRow:verticalRows.integerValue - 1 horizontalRow:horRow blockIsDynamic:NO];
     }
-    
 }
 
 - (NSArray<NSNumber *> *)randomlyPopulateStaticBlocksForVerticalNumberOfRows:(NSNumber *)rows {
@@ -199,9 +204,9 @@ NSUInteger const ObstacleFreeZone = 220;
         BOOL shouldAddBlockOnGivenPlace = shouldAddBlock <= self.fillProbability;
         
         if (shouldAddBlockOnGivenPlace) {
-            [result addObject:@YES];
+            [result addObject:SINGLE_BLOCK_FLAG];
         } else {
-            [result addObject:@NO];
+            [result addObject:NO_BLOCK_FLAG];
             thereIsAtLeastOneHole = YES;
         }
         
@@ -211,11 +216,25 @@ NSUInteger const ObstacleFreeZone = 220;
     if (!thereIsAtLeastOneHole) {
         uint32_t placeToClearBlock = arc4random_uniform((uint32_t)result.count);
         [result replaceObjectAtIndex:placeToClearBlock withObject:@NO];
+    } else {
+        NSNumber *blockForMoving = [self findSingleBlockAppropriateForMovingFrom:result];
+        if (blockForMoving) {
+            [result replaceObjectAtIndex:blockForMoving.integerValue withObject:DYNAMIC_BLOCK_FLAG];
+        }
     }
     
-    
-    
     return [NSArray arrayWithArray:result];
+}
+
+- (NSNumber *)findSingleBlockAppropriateForMovingFrom:(NSArray<NSNumber *> *)blocks {
+    
+    for (NSUInteger i = 1; i + 1 < blocks.count; i++) {
+        // search for  - + - , where "-" - no block, "+" - block
+        if (!blocks[i - 1].boolValue && blocks[i].boolValue && !blocks[i + 1].boolValue) {
+            return @(i);
+        }
+    }
+    return nil;
 }
 
 #pragma mark - Helper Methods
@@ -235,21 +254,40 @@ NSUInteger const ObstacleFreeZone = 220;
              @"verRows" : @(gameFieldNumberOfVerticalRows)};
 }
 
-- (void)drawStaticBlockAtVerticalRow:(NSUInteger)verRow horizontalRow:(NSUInteger)horRow {
+- (void)drawStaticBlockAtVerticalRow:(NSUInteger)verRow horizontalRow:(NSUInteger)horRow blockIsDynamic:(BOOL)blockIsDynamic {
+    //    NSLog(@"drawing block at ver:%ld hor:%ld", verRow, horRow);
     
-//    NSLog(@"drawing block at ver:%ld hor:%ld", verRow, horRow);
-    SKTexture *blockTexture = [SKTexture textureWithImageNamed:@"grassPlatform"];
-    SKShapeNode *shape = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(self.blockSize, self.blockSize) cornerRadius:self.blockSize / 4];
-    shape.fillTexture = blockTexture;
-    shape.fillColor = [UIColor whiteColor];
+    SKShapeNode *shape = [self grassBlockShapeNode];
+    shape.position = [self coordinatesOfVerticalRow:verRow horizontalRow:horRow];
     
-    CGFloat xCoordinate = horRow * self.blockSize + self.blockSize / 2.;
-    CGFloat yCoordinate = self.frame.size.height - self.blockSize - verRow * self.blockSize - ObstacleFreeZone + self.blockSize / 2.;
-    shape.position = CGPointMake(xCoordinate, yCoordinate);
+    if (blockIsDynamic) {
+        SKAction *moveToLeftStartingPositionAction = [SKAction moveByX:-shape.frame.size.width*0.95 y:0 duration:0.5];
+        
+        SKAction *waitAction = [SKAction waitForDuration:1];
+        SKAction *moveRightAction = [SKAction moveByX:2 * shape.frame.size.width*0.95 y:0 duration:0.5];
+        SKAction *moveLeftAction = [SKAction moveByX:-2 * shape.frame.size.width*0.95 y:0 duration:0.5];
+        
+        SKAction *wholeMovingAnimation = [SKAction sequence:@[waitAction, moveRightAction, waitAction, moveLeftAction]];
+        
+        [shape runAction:[SKAction sequence:@[moveToLeftStartingPositionAction, [SKAction repeatActionForever:wholeMovingAnimation]]]];
+    }
     
     [self.rootNode addChild:shape];
 }
 
+- (SKShapeNode *)grassBlockShapeNode {
+    SKTexture *blockTexture = [SKTexture textureWithImageNamed:@"grassPlatform"];
+    SKShapeNode *shape = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(self.blockSize, self.blockSize) cornerRadius:self.blockSize / 4];
+    shape.fillTexture = blockTexture;
+    shape.fillColor = [UIColor whiteColor];
+    return shape;
+}
+
+- (CGPoint)coordinatesOfVerticalRow:(NSUInteger)verRow horizontalRow:(NSUInteger)horRow {
+    CGFloat xCoordinate = horRow * self.blockSize + self.blockSize / 2.;
+    CGFloat yCoordinate = self.frame.size.height - self.blockSize - verRow * self.blockSize - ObstacleFreeZone + self.blockSize / 2.;
+    return CGPointMake(xCoordinate, yCoordinate);
+}
 
 - (void)didFinishUpdate {
     [self centerOnCameraNode];
