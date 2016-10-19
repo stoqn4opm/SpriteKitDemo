@@ -24,6 +24,8 @@
 - (void)setSpriteKitView:(SKView *)spriteKitView {
     spriteKitView.showsFPS = YES;
     spriteKitView.showsNodeCount = YES;
+    spriteKitView.showsPhysics = YES;
+    
     _spriteKitView = spriteKitView;
 }
 
@@ -43,7 +45,7 @@
 
 - (void)loadDynamicLevelScene {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    DynamicLevelScene *dLevel = [[DynamicLevelScene alloc] initWithSceneSize:CGSizeMake(screenRect.size.width, screenRect.size.height)  levelLength:12 levelSpeed:LevelSpeedFast levelDificulty:6];
+    DynamicLevelScene *dLevel = [[DynamicLevelScene alloc] initWithSceneSize:CGSizeMake(screenRect.size.width, screenRect.size.height)  levelLength:4 levelSpeed:LevelSpeedFast levelDificulty:6];
     [self.spriteKitView presentScene:dLevel];
     dLevel.scaleMode = SKSceneScaleModeAspectFit;
 }
