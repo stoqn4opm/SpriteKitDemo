@@ -7,7 +7,6 @@
 //
 
 #import "DynamicLevelScene.h"
-#import "GameManager.h"
 
 #define SINGLE_BLOCK_FLAG @1
 #define NO_BLOCK_FLAG @0

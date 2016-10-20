@@ -13,6 +13,8 @@
 uint32_t const MainCharacterBitMask    = 0b01;
 uint32_t const BlocksBitMask           = 0b10;
 
+NSString const * OptionsChangedNotification = @"optionsChanged";
+
 @implementation GameManager
 
 + (id)sharedManager {
@@ -20,6 +22,10 @@ uint32_t const BlocksBitMask           = 0b10;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedMyManager = [[self alloc] init];
+        
+        // option defaults
+        sharedMyManager.difficultyOption = 5;
+        sharedMyManager.levelDurationOption = 60;
     });
     return sharedMyManager;
 }
@@ -53,7 +59,7 @@ uint32_t const BlocksBitMask           = 0b10;
 
 - (void)loadDynamicLevelScene {
     
-    DynamicLevelScene *dLevel = [[DynamicLevelScene alloc] initWithSceneSize:[self screenSize]  levelLength:4 levelSpeed:LevelSpeedFast levelDificulty:6];
+    DynamicLevelScene *dLevel = [[DynamicLevelScene alloc] initWithSceneSize:[self screenSize]  levelLength:4 levelSpeed:self.levelSpeedOption levelDificulty:self.difficultyOption];
     [self.spriteKitView presentScene:dLevel];
     dLevel.scaleMode = SKSceneScaleModeAspectFit;
 }
@@ -66,6 +72,43 @@ uint32_t const BlocksBitMask           = 0b10;
     GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:sceneName];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     [self.spriteKitView presentScene:scene];
+}
+
+#pragma mark - Options Setting
+
+- (void)setLevelSpeedOption:(LevelSpeed)levelSpeedOption {
+    if (_levelSpeedOption != levelSpeedOption) {
+        _levelSpeedOption = levelSpeedOption;
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil];
+    }
+}
+
+- (void)makeDifficultyOptionGoUpIfPossible {
+    if (self.difficultyOption < 9) {
+        self.difficultyOption++;
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil];
+    }
+}
+
+- (void)makeDifficultyOptionGoDownIfPossible {
+    if (self.difficultyOption > 1) {
+        self.difficultyOption--;
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil userInfo:@{@"changedValue" : @""}];
+    }
+}
+
+- (void)makeDurationOptionGoUpIfPossible {
+    if (self.levelDurationOption < 90) {
+        self.levelDurationOption+=30;
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil];
+    }
+}
+
+- (void)makeDurationOptionGoDownIfPossible {
+    if (self.levelDurationOption > 30) {
+        self.levelDurationOption-=30;
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil];
+    }
 }
 
 #pragma mark - Main Character

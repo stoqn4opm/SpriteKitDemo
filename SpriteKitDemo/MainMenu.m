@@ -30,6 +30,9 @@
     self.startGameBckgNode = (SKSpriteNode *)[self childNodeWithName:@"startGameBckgNode"];
     self.optionNode = (SKLabelNode *)[self childNodeWithName:@"optionNode"];
     self.optionBckgNode = (SKSpriteNode *)[self childNodeWithName:@"optionBckgNode"];
+    
+    self.startGameNode.fontName = @"3Dventure";
+    self.optionNode.fontName = @"3Dventure";
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		323AD76F1DB8E27100E1C90C /* Options.m in Sources */ = {isa = PBXBuildFile; fileRef = 323AD76E1DB8E27100E1C90C /* Options.m */; };
+		323AD7711DB8E28900E1C90C /* Options.sks in Resources */ = {isa = PBXBuildFile; fileRef = 323AD7701DB8E28900E1C90C /* Options.sks */; };
 		32565A361DB0D47E0063B6FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A351DB0D47E0063B6FD /* main.m */; };
 		32565A391DB0D47E0063B6FD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A381DB0D47E0063B6FD /* AppDelegate.m */; };
 		32565A3B1DB0D47E0063B6FD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32565A3A1DB0D47E0063B6FD /* GameScene.sks */; };
@@ -25,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		323AD76D1DB8E27100E1C90C /* Options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
+		323AD76E1DB8E27100E1C90C /* Options.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Options.m; sourceTree = "<group>"; };
+		323AD7701DB8E28900E1C90C /* Options.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Options.sks; sourceTree = "<group>"; };
 		32565A311DB0D47E0063B6FD /* SpriteKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32565A351DB0D47E0063B6FD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32565A371DB0D47E0063B6FD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -65,6 +70,9 @@
 		323AD7691DB8CD7500E1C90C /* Options */ = {
 			isa = PBXGroup;
 			children = (
+				323AD7701DB8E28900E1C90C /* Options.sks */,
+				323AD76D1DB8E27100E1C90C /* Options.h */,
+				323AD76E1DB8E27100E1C90C /* Options.m */,
 			);
 			name = Options;
 			sourceTree = "<group>";
@@ -229,6 +237,7 @@
 				32565A481DB0D47E0063B6FD /* Assets.xcassets in Resources */,
 				32565A551DB11B160063B6FD /* GameOverScene.sks in Resources */,
 				326057231DB7795D002747C0 /* 3Dventure.ttf in Resources */,
+				323AD7711DB8E28900E1C90C /* Options.sks in Resources */,
 				32565A4B1DB0D47E0063B6FD /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -245,6 +254,7 @@
 				32565A591DB11BA60063B6FD /* GameOverScene.m in Sources */,
 				32565A5D1DB11D060063B6FD /* GameManager.m in Sources */,
 				32565A431DB0D47E0063B6FD /* GameViewController.m in Sources */,
+				323AD76F1DB8E27100E1C90C /* Options.m in Sources */,
 				32565A391DB0D47E0063B6FD /* AppDelegate.m in Sources */,
 				32565A401DB0D47E0063B6FD /* GameScene.m in Sources */,
 				32565A361DB0D47E0063B6FD /* main.m in Sources */,

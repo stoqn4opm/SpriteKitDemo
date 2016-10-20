@@ -7,12 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-
-typedef NS_ENUM(NSUInteger, LevelSpeed) {
-    LevelSpeedSlow,
-    LevelSpeedNormal,
-    LevelSpeedFast
-};
+#import "GameManager.h"
 
 @interface DynamicLevelScene : SKScene
 - (instancetype)initWithSceneSize:(CGSize)size levelLength:(CGFloat)levelLength levelSpeed:(LevelSpeed)speed levelDificulty:(NSUInteger)dificultyLevel;
