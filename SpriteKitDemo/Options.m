@@ -8,6 +8,7 @@
 
 #import "Options.h"
 #import "GameManager.h"
+#import "UIColor+AppColors.h"
 
 #define SelectedSlowColor [UIColor colorWithRed:0/255. green:125/255. blue:0/255. alpha:1]
 #define SelectedNormalColor [UIColor colorWithRed:252/255. green:158/255. blue:3/255. alpha:1]
@@ -19,6 +20,9 @@
 @property (strong, nonatomic) SKLabelNode *backToMainMenu;
 @property (strong, nonatomic) SKSpriteNode *backToMainMenuBcg;
 @property (strong, nonatomic) SKLabelNode *optionsTitle;
+
+@property (strong, nonatomic) SKSpriteNode *headerBck;
+@property (strong, nonatomic) SKSpriteNode *bottomBck;
 
 // Speed option related properties
 
@@ -51,6 +55,8 @@
 @property (strong, nonatomic) SKSpriteNode *durationValueAddBcg;
 @property (strong, nonatomic) SKSpriteNode *durationValueRemoveBcg;
 @property (assign, nonatomic) NSUInteger difficultyOption;
+
+
 @end
 
 @implementation Options
@@ -76,12 +82,16 @@
     
     self.backToMainMenu = (SKLabelNode *)[self childNodeWithName:@"back"];
     self.optionsTitle = (SKLabelNode *)[self childNodeWithName:@"options"];
+    self.headerBck = (SKSpriteNode *)[self childNodeWithName:@"headerBck"];
+    self.bottomBck = (SKSpriteNode *)[self childNodeWithName:@"bottomBck"];
     
     [self prepareSpeedOption];
     [self prepareTitleAndBackToMainMenu];
     [self prepareDifficultyOption];
     [self prepareDurationOption];
     
+    
+    [self setColorsOnScreen];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionsUpdated:) name:(NSString *)OptionsChangedNotification object:nil];
 }
 
@@ -90,6 +100,12 @@
 }
 
 #pragma mark - Initialization Helpers
+
+- (void)setColorsOnScreen {
+    self.backgroundColor = [UIColor backgroundColor];
+    self.headerBck.color = [UIColor optionsHeadingColor];
+    self.bottomBck.color = [UIColor optionsHeadingColor];
+}
 
 - (void)prepareSpeedOption {
     

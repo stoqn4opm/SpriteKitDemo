@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		323AD76F1DB8E27100E1C90C /* Options.m in Sources */ = {isa = PBXBuildFile; fileRef = 323AD76E1DB8E27100E1C90C /* Options.m */; };
 		323AD7711DB8E28900E1C90C /* Options.sks in Resources */ = {isa = PBXBuildFile; fileRef = 323AD7701DB8E28900E1C90C /* Options.sks */; };
+		323AD7731DB91D0600E1C90C /* colorPallete.png in Resources */ = {isa = PBXBuildFile; fileRef = 323AD7721DB91D0600E1C90C /* colorPallete.png */; };
+		323AD7791DB91DA800E1C90C /* UIColor+AppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 323AD7781DB91DA800E1C90C /* UIColor+AppColors.m */; };
 		32565A361DB0D47E0063B6FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A351DB0D47E0063B6FD /* main.m */; };
 		32565A391DB0D47E0063B6FD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A381DB0D47E0063B6FD /* AppDelegate.m */; };
 		32565A3B1DB0D47E0063B6FD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32565A3A1DB0D47E0063B6FD /* GameScene.sks */; };
@@ -30,6 +32,9 @@
 		323AD76D1DB8E27100E1C90C /* Options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
 		323AD76E1DB8E27100E1C90C /* Options.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Options.m; sourceTree = "<group>"; };
 		323AD7701DB8E28900E1C90C /* Options.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Options.sks; sourceTree = "<group>"; };
+		323AD7721DB91D0600E1C90C /* colorPallete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colorPallete.png; sourceTree = "<group>"; };
+		323AD7771DB91DA800E1C90C /* UIColor+AppColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppColors.h"; sourceTree = "<group>"; };
+		323AD7781DB91DA800E1C90C /* UIColor+AppColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppColors.m"; sourceTree = "<group>"; };
 		32565A311DB0D47E0063B6FD /* SpriteKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32565A351DB0D47E0063B6FD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32565A371DB0D47E0063B6FD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -114,9 +119,12 @@
 				32565A421DB0D47E0063B6FD /* GameViewController.m */,
 				32565A5B1DB11D060063B6FD /* GameManager.h */,
 				32565A5C1DB11D060063B6FD /* GameManager.m */,
+				323AD7771DB91DA800E1C90C /* UIColor+AppColors.h */,
+				323AD7781DB91DA800E1C90C /* UIColor+AppColors.m */,
 				323AD76A1DB8CD9800E1C90C /* Scenes */,
 				32565A441DB0D47E0063B6FD /* Main.storyboard */,
 				32565A471DB0D47E0063B6FD /* Assets.xcassets */,
+				323AD7721DB91D0600E1C90C /* colorPallete.png */,
 				32565A491DB0D47E0063B6FD /* LaunchScreen.storyboard */,
 				32565A4C1DB0D47E0063B6FD /* Info.plist */,
 				32565A341DB0D47E0063B6FD /* Supporting Files */,
@@ -238,6 +246,7 @@
 				32565A551DB11B160063B6FD /* GameOverScene.sks in Resources */,
 				326057231DB7795D002747C0 /* 3Dventure.ttf in Resources */,
 				323AD7711DB8E28900E1C90C /* Options.sks in Resources */,
+				323AD7731DB91D0600E1C90C /* colorPallete.png in Resources */,
 				32565A4B1DB0D47E0063B6FD /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,6 +263,7 @@
 				32565A591DB11BA60063B6FD /* GameOverScene.m in Sources */,
 				32565A5D1DB11D060063B6FD /* GameManager.m in Sources */,
 				32565A431DB0D47E0063B6FD /* GameViewController.m in Sources */,
+				323AD7791DB91DA800E1C90C /* UIColor+AppColors.m in Sources */,
 				323AD76F1DB8E27100E1C90C /* Options.m in Sources */,
 				32565A391DB0D47E0063B6FD /* AppDelegate.m in Sources */,
 				32565A401DB0D47E0063B6FD /* GameScene.m in Sources */,
@@ -313,6 +323,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -359,6 +371,8 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -378,6 +392,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = M352RPT82H;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = SpriteKitDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -391,6 +407,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = M352RPT82H;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = SpriteKitDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
