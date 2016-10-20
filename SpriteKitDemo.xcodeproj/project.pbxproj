@@ -62,6 +62,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		323AD7691DB8CD7500E1C90C /* Options */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Options;
+			sourceTree = "<group>";
+		};
+		323AD76A1DB8CD9800E1C90C /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				32565A5E1DB121550063B6FD /* Main Menu */,
+				32565A5A1DB11BAF0063B6FD /* Game Over */,
+				32565A561DB11B230063B6FD /* Game Level */,
+				323AD7691DB8CD7500E1C90C /* Options */,
+				325833931DB4F18100D1B154 /* Dynamic Level */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
 		32565A281DB0D47E0063B6FD = {
 			isa = PBXGroup;
 			children = (
@@ -83,14 +102,11 @@
 			children = (
 				32565A371DB0D47E0063B6FD /* AppDelegate.h */,
 				32565A381DB0D47E0063B6FD /* AppDelegate.m */,
+				32565A411DB0D47E0063B6FD /* GameViewController.h */,
+				32565A421DB0D47E0063B6FD /* GameViewController.m */,
 				32565A5B1DB11D060063B6FD /* GameManager.h */,
 				32565A5C1DB11D060063B6FD /* GameManager.m */,
-				32565A5E1DB121550063B6FD /* Main Menu */,
-				32565A5A1DB11BAF0063B6FD /* Game Over */,
-				32565A561DB11B230063B6FD /* Game Level */,
-				32565A421DB0D47E0063B6FD /* GameViewController.m */,
-				32565A411DB0D47E0063B6FD /* GameViewController.h */,
-				325833931DB4F18100D1B154 /* Dynamic Level */,
+				323AD76A1DB8CD9800E1C90C /* Scenes */,
 				32565A441DB0D47E0063B6FD /* Main.storyboard */,
 				32565A471DB0D47E0063B6FD /* Assets.xcassets */,
 				32565A491DB0D47E0063B6FD /* LaunchScreen.storyboard */,

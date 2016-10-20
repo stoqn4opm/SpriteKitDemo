@@ -58,6 +58,10 @@ uint32_t const BlocksBitMask           = 0b10;
     dLevel.scaleMode = SKSceneScaleModeAspectFit;
 }
 
+- (void)loadOptionsScene {
+    [self loadSceneWithName:@"Options"];
+}
+
 - (void)loadSceneWithName:(NSString *)sceneName {
     GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:sceneName];
     scene.scaleMode = SKSceneScaleModeAspectFill;

@@ -12,10 +12,12 @@
 @interface MainMenu()
 
 @property (nonatomic, strong) SKSpriteNode *titleNode;
-@property (nonatomic, strong) SKSpriteNode *startGameNode;
+@property (nonatomic, strong) SKLabelNode *startGameNode;
 @property (nonatomic, strong) SKSpriteNode *flashNode;
 @property (nonatomic, strong) SKSpriteNode *startGameBckgNode;
 
+@property (nonatomic, strong) SKLabelNode *optionNode;
+@property (nonatomic, strong) SKSpriteNode *optionBckgNode;
 @end
 
 @implementation MainMenu
@@ -24,8 +26,10 @@
     self.titleNode = (SKSpriteNode *)[self childNodeWithName:@"titleNode"];
     self.flashNode = (SKSpriteNode *)[self childNodeWithName:@"flashNode"];
     
-    self.startGameNode = (SKSpriteNode *)[self childNodeWithName:@"startGameNode"];
+    self.startGameNode = (SKLabelNode *)[self childNodeWithName:@"startGameNode"];
     self.startGameBckgNode = (SKSpriteNode *)[self childNodeWithName:@"startGameBckgNode"];
+    self.optionNode = (SKLabelNode *)[self childNodeWithName:@"optionNode"];
+    self.optionBckgNode = (SKSpriteNode *)[self childNodeWithName:@"optionBckgNode"];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -35,8 +39,13 @@
     
     if ([touchedNode isEqualToNode:self.startGameNode] ||
         [touchedNode isEqualToNode:self.startGameBckgNode]) {
-        [[GameManager sharedManager] loadLevelScene];
-    } else {
+        [[GameManager sharedManager] loadDynamicLevelScene];
+    }
+    else if ([touchedNode isEqualToNode:self.optionNode] ||
+             [touchedNode isEqualToNode:self.optionBckgNode]) {
+        [[GameManager sharedManager] loadOptionsScene];
+    }
+    else {
         SKAction *fadeInAction = [SKAction fadeInWithDuration:0.5];
         SKAction *fadeOutAction = [SKAction fadeOutWithDuration:0.5];
         [self.flashNode runAction:[SKAction sequence:@[fadeInAction, fadeOutAction]]];

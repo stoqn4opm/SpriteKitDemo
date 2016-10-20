@@ -22,6 +22,7 @@ extern uint32_t const BlocksBitMask;
 - (void)loadLevelScene;
 - (void)loadGameOverScene;
 - (void)loadDynamicLevelScene;
+- (void)loadOptionsScene;
 
 - (SKSpriteNode *)mainCharacterWithSize:(CGSize)size;
 - (void)mainCharacter:(SKSpriteNode *)character animateWalkLeftNotRightDirection:(BOOL)leftDirection;
