@@ -66,7 +66,7 @@ NSString const * OptionsChangedDuration = @"optionsChangedDuration";
 
 - (void)loadDynamicLevelScene {
     
-    DynamicLevelScene *dLevel = [[DynamicLevelScene alloc] initWithSceneSize:[self screenSize]  levelLength:4 levelSpeed:self.levelSpeedOption levelDificulty:self.difficultyOption];
+    DynamicLevelScene *dLevel = [[DynamicLevelScene alloc] initWithSceneSize:[self screenSize]  levelLength:self.levelDurationOption levelSpeed:self.levelSpeedOption levelDificulty:self.difficultyOption];
     [self.spriteKitView presentScene:dLevel];
     dLevel.scaleMode = SKSceneScaleModeAspectFit;
 }

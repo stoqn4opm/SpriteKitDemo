@@ -9,11 +9,7 @@
 #import "Options.h"
 #import "GameManager.h"
 #import "UIColor+AppColors.h"
-
-#define SelectedSlowColor [UIColor colorWithRed:0/255. green:125/255. blue:0/255. alpha:1]
-#define SelectedNormalColor [UIColor colorWithRed:252/255. green:158/255. blue:3/255. alpha:1]
-#define SelectedFastColor [UIColor colorWithRed:238/255. green:40/255. blue:47/255. alpha:1]
-#define NonSelectedColor [UIColor colorWithRed:255/255. green:255/255. blue:255/255. alpha:1]
+#import "SKLabelNode+CommonAnimations.h"
 
 @interface Options()
 
@@ -209,12 +205,12 @@
     if ([touchedNode isEqualToNode:self.difficultyLevelValueAdd] ||
         [touchedNode isEqualToNode:self.difficultyLevelValueAddBcg]) {
         [[GameManager sharedManager] makeDifficultyOptionGoUpIfPossible];
-        [self makeControlPop:self.difficultyLevelValueAdd];
+        [self.difficultyLevelValueAdd makeControlPopWithCompletion:nil];
     }
     else if ([touchedNode isEqualToNode:self.difficultyLevelValueRemove] ||
              [touchedNode isEqualToNode:self.difficultyLevelValueRemoveBcg]) {
         [[GameManager sharedManager] makeDifficultyOptionGoDownIfPossible];
-        [self makeControlPop:self.difficultyLevelValueRemove];
+        [self.difficultyLevelValueRemove makeControlPopWithCompletion:nil];
     }
 }
 
@@ -223,12 +219,12 @@
     if ([touchedNode isEqualToNode:self.durationValueAdd] ||
         [touchedNode isEqualToNode:self.durationValueAddBcg]) {
         [[GameManager sharedManager] makeDurationOptionGoUpIfPossible];
-        [self makeControlPop:self.durationValueAdd];
+        [self.durationValueAdd makeControlPopWithCompletion:nil];
     }
     else if ([touchedNode isEqualToNode:self.durationValueRemove] ||
              [touchedNode isEqualToNode:self.durationValueRemoveBcg]) {
         [[GameManager sharedManager] makeDurationOptionGoDownIfPossible];
-        [self makeControlPop:self.durationValueRemove];
+        [self.durationValueRemove makeControlPopWithCompletion:nil];
     }
 }
 
@@ -236,7 +232,9 @@
     
     if ([touchedNode isEqualToNode:self.backToMainMenu] ||
         [touchedNode isEqualToNode:self.backToMainMenuBcg]) {
-        [[GameManager sharedManager] loadMainMenuScene];
+        [self.backToMainMenu makeControlPopWithCompletion:^{
+            [[GameManager sharedManager] loadMainMenuScene];
+        }];
     }
 }
 
@@ -252,21 +250,12 @@
     }
     else if ([updatedValue isEqualToString:(NSString *)OptionsChangedDifficulty]) {
         self.difficultyLevelValueLabel.text = [NSString stringWithFormat:@"%ld", [[GameManager sharedManager] difficultyOption]];
-        [self makeControlPop:self.difficultyLevelValueLabel];
+        [self.difficultyLevelValueLabel makeControlPopWithCompletion:nil];
     }
     else if ([updatedValue isEqualToString:(NSString *)OptionsChangedDuration]) {
         self.durationValueLabel.text = [NSString stringWithFormat:@"%.0f", [[GameManager sharedManager] levelDurationOption]];
-        [self makeControlPop:self.durationValueLabel];
+        [self.durationValueLabel makeControlPopWithCompletion:nil];
     }
-}
-
-- (void)makeControlPop:(SKNode *)node {
-    [node removeAllActions];
-    SKAction *scaleUp = [SKAction scaleTo:1.5 duration:0.05];
-    SKAction *wait = [SKAction waitForDuration:0.2];
-    SKAction *scaleDown = [SKAction scaleTo:1 duration:0.2];
-    
-    [node runAction:[SKAction sequence:@[scaleUp, wait, scaleDown]]];
 }
 
 - (void)animateSpeedValueSelectionWithOldValue:(NSNumber *)oldValue newValue:(NSNumber *)newValue {
@@ -277,15 +266,15 @@
 - (void)selectNewSpeedValueUI:(NSNumber *)newValue {
     switch (newValue.integerValue) {
         case LevelSpeedSlow: {
-            [self makeLabelGrow:self.speedSlowLabel withColor:SelectedSlowColor];
+            [self.speedSlowLabel makeLabelGrowWithColor:SelectedSlowColor];
             break;
         }
         case LevelSpeedNormal: {
-            [self makeLabelGrow:self.speedNormalLabel withColor:SelectedNormalColor];
+            [self.speedNormalLabel makeLabelGrowWithColor:SelectedNormalColor];
             break;
         }
         case LevelSpeedFast: {
-            [self makeLabelGrow:self.speedFastLabel withColor:SelectedFastColor];
+            [self.speedFastLabel makeLabelGrowWithColor:SelectedFastColor];
             break;
         }
         default:
@@ -296,38 +285,20 @@
 - (void)deselectOldSpeedValue:(NSNumber *)oldValue {
     switch (oldValue.integerValue) {
         case LevelSpeedSlow: {
-            [self makeLabelShrink:self.speedSlowLabel];
+            [self.speedSlowLabel makeLabelShrink];
             break;
         }
         case LevelSpeedNormal: {
-            [self makeLabelShrink:self.speedNormalLabel];
+            [self.speedNormalLabel makeLabelShrink];
             break;
         }
         case LevelSpeedFast: {
-            [self makeLabelShrink:self.speedFastLabel];
+            [self.speedFastLabel makeLabelShrink];
             break;
         }
         default:
             break;
     }
-}
-
-- (void)makeLabelGrow:(SKLabelNode *)node withColor:(UIColor *)color {
-    [node removeAllActions];
-    SKAction *scaleUp = [SKAction scaleTo:2 duration:0.1];
-    SKAction *colorize = [SKAction runBlock:^{
-        node.fontColor = color;
-    }];
-    [node runAction:[SKAction group:@[scaleUp, colorize]]];
-}
-
-- (void)makeLabelShrink:(SKLabelNode *)node {
-    [node removeAllActions];
-    SKAction *scaleDown = [SKAction scaleTo:1 duration:0.1];
-    SKAction *colorize = [SKAction runBlock:^{
-        node.fontColor = NonSelectedColor;
-    }];
-    [node runAction:[SKAction group:@[scaleDown, colorize]]];
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "MainMenu.h"
 #import "GameManager.h"
+#import "SKLabelNode+CommonAnimations.h"
 
 @interface MainMenu()
 
@@ -42,11 +43,15 @@
     
     if ([touchedNode isEqualToNode:self.startGameNode] ||
         [touchedNode isEqualToNode:self.startGameBckgNode]) {
-        [[GameManager sharedManager] loadDynamicLevelScene];
+        [self.startGameNode makeControlPopWithCompletion:^{
+            [[GameManager sharedManager] loadDynamicLevelScene];
+        }];
     }
     else if ([touchedNode isEqualToNode:self.optionNode] ||
              [touchedNode isEqualToNode:self.optionBckgNode]) {
-        [[GameManager sharedManager] loadOptionsScene];
+        [self.optionNode makeControlPopWithCompletion:^{
+            [[GameManager sharedManager] loadOptionsScene];
+        }];
     }
     else {
         SKAction *fadeInAction = [SKAction fadeInWithDuration:0.5];

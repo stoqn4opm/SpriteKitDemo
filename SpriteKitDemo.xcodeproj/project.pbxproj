@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		321C6BA71DB929FC0069AB29 /* SKLabelNode+CommonAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C6BA61DB929FC0069AB29 /* SKLabelNode+CommonAnimations.m */; };
 		323AD76F1DB8E27100E1C90C /* Options.m in Sources */ = {isa = PBXBuildFile; fileRef = 323AD76E1DB8E27100E1C90C /* Options.m */; };
 		323AD7711DB8E28900E1C90C /* Options.sks in Resources */ = {isa = PBXBuildFile; fileRef = 323AD7701DB8E28900E1C90C /* Options.sks */; };
 		323AD7731DB91D0600E1C90C /* colorPallete.png in Resources */ = {isa = PBXBuildFile; fileRef = 323AD7721DB91D0600E1C90C /* colorPallete.png */; };
@@ -29,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		321C6BA51DB929FC0069AB29 /* SKLabelNode+CommonAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKLabelNode+CommonAnimations.h"; sourceTree = "<group>"; };
+		321C6BA61DB929FC0069AB29 /* SKLabelNode+CommonAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKLabelNode+CommonAnimations.m"; sourceTree = "<group>"; };
 		323AD76D1DB8E27100E1C90C /* Options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
 		323AD76E1DB8E27100E1C90C /* Options.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Options.m; sourceTree = "<group>"; };
 		323AD7701DB8E28900E1C90C /* Options.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Options.sks; sourceTree = "<group>"; };
@@ -121,6 +124,8 @@
 				32565A5C1DB11D060063B6FD /* GameManager.m */,
 				323AD7771DB91DA800E1C90C /* UIColor+AppColors.h */,
 				323AD7781DB91DA800E1C90C /* UIColor+AppColors.m */,
+				321C6BA51DB929FC0069AB29 /* SKLabelNode+CommonAnimations.h */,
+				321C6BA61DB929FC0069AB29 /* SKLabelNode+CommonAnimations.m */,
 				323AD76A1DB8CD9800E1C90C /* Scenes */,
 				32565A441DB0D47E0063B6FD /* Main.storyboard */,
 				32565A471DB0D47E0063B6FD /* Assets.xcassets */,
@@ -266,6 +271,7 @@
 				323AD7791DB91DA800E1C90C /* UIColor+AppColors.m in Sources */,
 				323AD76F1DB8E27100E1C90C /* Options.m in Sources */,
 				32565A391DB0D47E0063B6FD /* AppDelegate.m in Sources */,
+				321C6BA71DB929FC0069AB29 /* SKLabelNode+CommonAnimations.m in Sources */,
 				32565A401DB0D47E0063B6FD /* GameScene.m in Sources */,
 				32565A361DB0D47E0063B6FD /* main.m in Sources */,
 			);
