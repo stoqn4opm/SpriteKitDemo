@@ -17,7 +17,15 @@ typedef NS_ENUM(NSUInteger, LevelSpeed) {
 
 extern uint32_t const MainCharacterBitMask;
 extern uint32_t const BlocksBitMask;
+
 extern NSString const * OptionsChangedNotification;
+
+extern NSString const * OptionsChangedKey;
+extern NSString const * OptionsChangedDifficulty;
+extern NSString const * OptionsChangedSpeed;
+extern NSString const * OptionsChangedOldSpeedValue;
+extern NSString const * OptionsChangedNewSpeedValue;
+extern NSString const * OptionsChangedDuration;
 
 @interface GameManager : NSObject
 

@@ -15,6 +15,13 @@ uint32_t const BlocksBitMask           = 0b10;
 
 NSString const * OptionsChangedNotification = @"optionsChanged";
 
+NSString const * OptionsChangedKey = @"optionsChangedKey";
+NSString const * OptionsChangedDifficulty = @"optionsChangedDiff";
+NSString const * OptionsChangedSpeed = @"optionsChangedSpeed";
+NSString const * OptionsChangedOldSpeedValue = @"optionsChangedSpeedOld";
+NSString const * OptionsChangedNewSpeedValue = @"optionsChangedSpeedNew";
+NSString const * OptionsChangedDuration = @"optionsChangedDuration";
+
 @implementation GameManager
 
 + (id)sharedManager {
@@ -78,36 +85,39 @@ NSString const * OptionsChangedNotification = @"optionsChanged";
 
 - (void)setLevelSpeedOption:(LevelSpeed)levelSpeedOption {
     if (_levelSpeedOption != levelSpeedOption) {
+        NSNumber *oldValue = @(_levelSpeedOption);
         _levelSpeedOption = levelSpeedOption;
-        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil userInfo:@{OptionsChangedKey : OptionsChangedSpeed,
+                                                                                                                                OptionsChangedOldSpeedValue : oldValue,
+                                                                                                                                OptionsChangedNewSpeedValue : @(_levelSpeedOption)}];
     }
 }
 
 - (void)makeDifficultyOptionGoUpIfPossible {
     if (self.difficultyOption < 9) {
         self.difficultyOption++;
-        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil userInfo:@{OptionsChangedKey : OptionsChangedDifficulty}];
     }
 }
 
 - (void)makeDifficultyOptionGoDownIfPossible {
     if (self.difficultyOption > 1) {
         self.difficultyOption--;
-        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil userInfo:@{@"changedValue" : @""}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil userInfo:@{OptionsChangedKey : OptionsChangedDifficulty}];
     }
 }
 
 - (void)makeDurationOptionGoUpIfPossible {
     if (self.levelDurationOption < 90) {
         self.levelDurationOption+=30;
-        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil userInfo:@{OptionsChangedKey : OptionsChangedDuration}];
     }
 }
 
 - (void)makeDurationOptionGoDownIfPossible {
     if (self.levelDurationOption > 30) {
         self.levelDurationOption-=30;
-        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)OptionsChangedNotification object:nil userInfo:@{OptionsChangedKey : OptionsChangedDuration}];
     }
 }
 

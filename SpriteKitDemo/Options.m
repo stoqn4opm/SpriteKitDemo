@@ -9,6 +9,11 @@
 #import "Options.h"
 #import "GameManager.h"
 
+#define SelectedSlowColor [UIColor colorWithRed:0/255. green:125/255. blue:0/255. alpha:1]
+#define SelectedNormalColor [UIColor colorWithRed:252/255. green:158/255. blue:3/255. alpha:1]
+#define SelectedFastColor [UIColor colorWithRed:238/255. green:40/255. blue:47/255. alpha:1]
+#define NonSelectedColor [UIColor colorWithRed:255/255. green:255/255. blue:255/255. alpha:1]
+
 @interface Options()
 
 @property (strong, nonatomic) SKLabelNode *backToMainMenu;
@@ -93,6 +98,8 @@
     self.speedNormalLabel.fontName = @"3Dventure";
     self.speedFastLabel.fontName = @"3Dventure";
 
+    [self selectNewSpeedValueUI:@([[GameManager sharedManager] levelSpeedOption])];
+    
     self.speedSlowBcg = [SKSpriteNode spriteNodeWithTexture:nil size:self.speedSlowLabel.frame.size];
     self.speedSlowBcg.position = self.speedSlowLabel.position;
     [self addChild:self.speedSlowBcg];
@@ -220,18 +227,91 @@
 #pragma mark - UI Update
 
 - (void)optionsUpdated:(NSNotification *)notif {
-    self.durationValueLabel.text = [NSString stringWithFormat:@"%.0f", [[GameManager sharedManager] levelDurationOption]];
-    self.difficultyLevelValueLabel.text = [NSString stringWithFormat:@"%ld", [[GameManager sharedManager] difficultyOption]];
+    NSString *updatedValue = [notif.userInfo valueForKey:(NSString *)OptionsChangedKey];
     
+    if ([updatedValue isEqualToString:(NSString *)OptionsChangedSpeed]) {
+        NSNumber *oldValue = [notif.userInfo valueForKey:(NSString *)OptionsChangedOldSpeedValue];
+        NSNumber *newValue = [notif.userInfo valueForKey:(NSString *)OptionsChangedNewSpeedValue];
+        [self animateSpeedValueSelectionWithOldValue:oldValue newValue:newValue];
+    }
+    else if ([updatedValue isEqualToString:(NSString *)OptionsChangedDifficulty]) {
+        self.difficultyLevelValueLabel.text = [NSString stringWithFormat:@"%ld", [[GameManager sharedManager] difficultyOption]];
+        [self makeControlPop:self.difficultyLevelValueLabel];
+    }
+    else if ([updatedValue isEqualToString:(NSString *)OptionsChangedDuration]) {
+        self.durationValueLabel.text = [NSString stringWithFormat:@"%.0f", [[GameManager sharedManager] levelDurationOption]];
+        [self makeControlPop:self.durationValueLabel];
+    }
 }
 
 - (void)makeControlPop:(SKNode *)node {
     [node removeAllActions];
-    SKAction *scaleUpX = [SKAction scaleTo:1.5 duration:0.1];
+    SKAction *scaleUp = [SKAction scaleTo:1.5 duration:0.05];
     SKAction *wait = [SKAction waitForDuration:0.2];
-    SKAction *scaleDown = [SKAction scaleTo:1 duration:0.6];
+    SKAction *scaleDown = [SKAction scaleTo:1 duration:0.2];
     
-    [node runAction:[SKAction sequence:@[scaleUpX, wait, scaleDown]]];
+    [node runAction:[SKAction sequence:@[scaleUp, wait, scaleDown]]];
+}
+
+- (void)animateSpeedValueSelectionWithOldValue:(NSNumber *)oldValue newValue:(NSNumber *)newValue {
+    [self deselectOldSpeedValue:oldValue];
+    [self selectNewSpeedValueUI:newValue];
+}
+
+- (void)selectNewSpeedValueUI:(NSNumber *)newValue {
+    switch (newValue.integerValue) {
+        case LevelSpeedSlow: {
+            [self makeLabelGrow:self.speedSlowLabel withColor:SelectedSlowColor];
+            break;
+        }
+        case LevelSpeedNormal: {
+            [self makeLabelGrow:self.speedNormalLabel withColor:SelectedNormalColor];
+            break;
+        }
+        case LevelSpeedFast: {
+            [self makeLabelGrow:self.speedFastLabel withColor:SelectedFastColor];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)deselectOldSpeedValue:(NSNumber *)oldValue {
+    switch (oldValue.integerValue) {
+        case LevelSpeedSlow: {
+            [self makeLabelShrink:self.speedSlowLabel];
+            break;
+        }
+        case LevelSpeedNormal: {
+            [self makeLabelShrink:self.speedNormalLabel];
+            break;
+        }
+        case LevelSpeedFast: {
+            [self makeLabelShrink:self.speedFastLabel];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)makeLabelGrow:(SKLabelNode *)node withColor:(UIColor *)color {
+    [node removeAllActions];
+    SKAction *scaleUp = [SKAction scaleTo:2 duration:0.1];
+    SKAction *colorize = [SKAction runBlock:^{
+        node.fontColor = color;
+    }];
+    [node runAction:[SKAction group:@[scaleUp, colorize]]];
+}
+
+- (void)makeLabelShrink:(SKLabelNode *)node {
+    [node removeAllActions];
+    SKAction *scaleDown = [SKAction scaleTo:1 duration:0.1];
+    SKAction *colorize = [SKAction runBlock:^{
+        node.fontColor = NonSelectedColor;
+    }];
+    [node runAction:[SKAction group:@[scaleDown, colorize]]];
 }
 
 @end
