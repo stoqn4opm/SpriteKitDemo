@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
 
+extern uint32_t const MainCharacterBitMask;
+extern uint32_t const BlocksBitMask;
+
 @interface GameManager : NSObject
 
 + (id)sharedManager;
@@ -19,5 +22,9 @@
 - (void)loadLevelScene;
 - (void)loadGameOverScene;
 - (void)loadDynamicLevelScene;
+
+- (SKSpriteNode *)mainCharacterWithSize:(CGSize)size;
+- (void)mainCharacter:(SKSpriteNode *)character animateWalkLeftNotRightDirection:(BOOL)leftDirection;
+- (void)moveMainCharacter:(SKSpriteNode *)mainCharacter ToTouch:(UITouch *)touch;
 
 @end

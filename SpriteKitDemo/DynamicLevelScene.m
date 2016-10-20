@@ -7,15 +7,13 @@
 //
 
 #import "DynamicLevelScene.h"
+#import "GameManager.h"
 
 #define SINGLE_BLOCK_FLAG @1
 #define NO_BLOCK_FLAG @0
 #define DYNAMIC_BLOCK_FLAG @2
 
 NSUInteger const ObstacleFreeZone = 220;
-
-static NSUInteger const MainCharacterBitMask    = 0b01;
-static NSUInteger const BlocksBitMask           = 0b10;
 
 @interface DynamicLevelScene()
 
@@ -48,7 +46,8 @@ static NSUInteger const BlocksBitMask           = 0b10;
         [self createCameraNode];
         [self generateStaticBlockObtacles];
         
-        [self mainCharacter];
+        self.mainCharacter = [[GameManager sharedManager] mainCharacterWithSize:CGSizeMake(self.blockSize, self.blockSize)];
+        [self addChild:self.mainCharacter];
         self.mainCharacter.position = CGPointMake(140, 600);
 
         DynamicLevelScene __weak *weakSelf = self;
@@ -322,7 +321,7 @@ static NSUInteger const BlocksBitMask           = 0b10;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     UITouch *touch = touches.anyObject;
-    [self moveMainCharacterToTouch:touch];
+    [[GameManager sharedManager] moveMainCharacter:self.mainCharacter ToTouch:touch];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -331,62 +330,6 @@ static NSUInteger const BlocksBitMask           = 0b10;
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [[self mainCharacter] removeAllActions];
-}
-
-#pragma mark - Main Character
-
-- (SKSpriteNode *)mainCharacter {
-    if (_mainCharacter) {
-        return _mainCharacter;
-    }
-    SKTexture *standTexture = [SKTexture textureWithImageNamed:@"stand"];
-    CGSize characterSize = CGSizeMake(self.blockSize, self.blockSize);
-    _mainCharacter = [SKSpriteNode spriteNodeWithTexture:standTexture size:characterSize];
-    [self addChild:_mainCharacter];
-//    _mainCharacter.anchorPoint = CGPointZero;
-    _mainCharacter.yScale =_mainCharacter.xScale = 1.2;
-    SKPhysicsBody *physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(self.blockSize * 0.4, self.blockSize * 0.7)];
-    physicsBody.categoryBitMask = MainCharacterBitMask;
-    physicsBody.collisionBitMask = BlocksBitMask;
-    physicsBody.contactTestBitMask = BlocksBitMask;
-    physicsBody.affectedByGravity = YES;
-    physicsBody.allowsRotation = NO;
-    _mainCharacter.physicsBody = physicsBody;
-    return _mainCharacter;
-}
-
-- (void)mainCharacterAnimateWalkLeftNotRightDirection:(BOOL)leftDirection {
-    SKSpriteNode *character = [self mainCharacter];
-    [character removeAllActions];
-    NSArray<NSString *> *textureNames = leftDirection ? @[@"left1", @"left2", @"left3", @"left4"] : @[@"right1", @"right2", @"right3", @"right4"];
-    
-    SKAction *leftMove1 = [SKAction runBlock:^{
-        character.texture = [SKTexture textureWithImageNamed:textureNames[0]];
-    }];
-    SKAction *leftMove2 = [SKAction runBlock:^{
-        character.texture = [SKTexture textureWithImageNamed:textureNames[1]];
-    }];
-    SKAction *leftMove3 = [SKAction runBlock:^{
-        character.texture = [SKTexture textureWithImageNamed:textureNames[2]];
-    }];
-    SKAction *leftMove4 = [SKAction runBlock:^{
-        character.texture = [SKTexture textureWithImageNamed:textureNames[3]];
-    }];
-    SKAction *waitAction = [SKAction waitForDuration:0.15];
-    SKAction *wholeAnimation = [SKAction sequence:@[leftMove1, waitAction, leftMove2, waitAction, leftMove3, waitAction, leftMove4, waitAction]];
-    SKAction *repeatWholeAnimationAction = [SKAction repeatActionForever:wholeAnimation];
-    [character runAction:repeatWholeAnimationAction];
-}
-
-- (void)moveMainCharacterToTouch:(UITouch *)touch {
-    CGPoint touchLocation = [touch locationInNode:self];
-    BOOL shouldAnimateLeft = touchLocation.x < self.mainCharacter.frame.origin.x;
-    [self mainCharacterAnimateWalkLeftNotRightDirection:shouldAnimateLeft];
-    
-    CGFloat walkDuration = fabs(touchLocation.x - self.mainCharacter.frame.origin.x);
-    [self.mainCharacter runAction:[SKAction moveToX:touchLocation.x duration:walkDuration * 0.008] completion:^{
-        [[self mainCharacter] removeAllActions];
-    }];
 }
 
 @end
