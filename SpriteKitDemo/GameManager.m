@@ -78,7 +78,8 @@ NSString const * OptionsChangedDuration = @"optionsChangedDuration";
 - (void)loadSceneWithName:(NSString *)sceneName {
     GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:sceneName];
     scene.scaleMode = SKSceneScaleModeAspectFill;
-    [self.spriteKitView presentScene:scene];
+    SKTransition *transition = [SKTransition fadeWithColor:[UIColor backgroundColor] duration:0.5];
+    [self.spriteKitView presentScene:scene transition:transition];
 }
 
 #pragma mark - Options Setting

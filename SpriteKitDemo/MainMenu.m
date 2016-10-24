@@ -9,6 +9,7 @@
 #import "MainMenu.h"
 #import "GameManager.h"
 #import "SKLabelNode+CommonAnimations.h"
+#import "SKLabelNode+Background.h"
 
 @interface MainMenu()
 
@@ -34,6 +35,10 @@
     
     self.startGameNode.fontName = @"3Dventure";
     self.optionNode.fontName = @"3Dventure";
+    
+    [self.startGameNode addBackgroundWithColor:[UIColor labelBackgroundColor]];
+    [self.optionNode addBackgroundWithColor:[UIColor labelBackgroundColor]];
+    self.backgroundColor = [UIColor backgroundColor];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

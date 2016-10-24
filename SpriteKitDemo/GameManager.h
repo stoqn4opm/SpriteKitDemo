@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
+#import "UIColor+AppColors.h"
 
 typedef NS_ENUM(NSUInteger, LevelSpeed) {
     LevelSpeedSlow,

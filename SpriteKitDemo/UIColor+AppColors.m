@@ -18,4 +18,8 @@
     return [UIColor colorWithRed:48/255. green:144/255. blue:117/255. alpha:1];
 }
 
++ (UIColor *)labelBackgroundColor {
+    return [UIColor colorWithRed:74/255. green:111/255. blue:184/255. alpha:1];
+}
+
 @end

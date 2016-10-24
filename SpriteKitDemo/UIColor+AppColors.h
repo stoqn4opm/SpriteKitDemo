@@ -17,5 +17,5 @@
 
 + (UIColor *)backgroundColor;
 + (UIColor *)optionsHeadingColor;
-
++ (UIColor *)labelBackgroundColor;
 @end

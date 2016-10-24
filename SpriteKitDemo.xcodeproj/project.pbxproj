@@ -27,6 +27,7 @@
 		32565A651DB122EC0063B6FD /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A641DB122EC0063B6FD /* MainMenu.m */; };
 		325833961DB4F1A600D1B154 /* DynamicLevelScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 325833951DB4F1A600D1B154 /* DynamicLevelScene.m */; };
 		326057231DB7795D002747C0 /* 3Dventure.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 326057221DB7795D002747C0 /* 3Dventure.ttf */; };
+		3269CB101DBE309300F59A59 /* SKLabelNode+Background.m in Sources */ = {isa = PBXBuildFile; fileRef = 3269CB0F1DBE309300F59A59 /* SKLabelNode+Background.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,8 @@
 		325833941DB4F1A600D1B154 /* DynamicLevelScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicLevelScene.h; sourceTree = "<group>"; };
 		325833951DB4F1A600D1B154 /* DynamicLevelScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicLevelScene.m; sourceTree = "<group>"; };
 		326057221DB7795D002747C0 /* 3Dventure.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 3Dventure.ttf; sourceTree = "<group>"; };
+		3269CB0E1DBE309300F59A59 /* SKLabelNode+Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKLabelNode+Background.h"; sourceTree = "<group>"; };
+		3269CB0F1DBE309300F59A59 /* SKLabelNode+Background.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKLabelNode+Background.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,8 @@
 				323AD7781DB91DA800E1C90C /* UIColor+AppColors.m */,
 				321C6BA51DB929FC0069AB29 /* SKLabelNode+CommonAnimations.h */,
 				321C6BA61DB929FC0069AB29 /* SKLabelNode+CommonAnimations.m */,
+				3269CB0E1DBE309300F59A59 /* SKLabelNode+Background.h */,
+				3269CB0F1DBE309300F59A59 /* SKLabelNode+Background.m */,
 				323AD76A1DB8CD9800E1C90C /* Scenes */,
 				32565A441DB0D47E0063B6FD /* Main.storyboard */,
 				32565A471DB0D47E0063B6FD /* Assets.xcassets */,
@@ -265,6 +270,7 @@
 			files = (
 				32565A651DB122EC0063B6FD /* MainMenu.m in Sources */,
 				325833961DB4F1A600D1B154 /* DynamicLevelScene.m in Sources */,
+				3269CB101DBE309300F59A59 /* SKLabelNode+Background.m in Sources */,
 				32565A591DB11BA60063B6FD /* GameOverScene.m in Sources */,
 				32565A5D1DB11D060063B6FD /* GameManager.m in Sources */,
 				32565A431DB0D47E0063B6FD /* GameViewController.m in Sources */,

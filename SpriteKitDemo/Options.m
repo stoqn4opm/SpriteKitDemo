@@ -8,8 +8,8 @@
 
 #import "Options.h"
 #import "GameManager.h"
-#import "UIColor+AppColors.h"
 #import "SKLabelNode+CommonAnimations.h"
+#import "SKLabelNode+Background.h"
 
 @interface Options()
 
@@ -18,7 +18,6 @@
 @property (strong, nonatomic) SKLabelNode *optionsTitle;
 
 @property (strong, nonatomic) SKSpriteNode *headerBck;
-@property (strong, nonatomic) SKSpriteNode *bottomBck;
 
 // Speed option related properties
 
@@ -79,7 +78,6 @@
     self.backToMainMenu = (SKLabelNode *)[self childNodeWithName:@"back"];
     self.optionsTitle = (SKLabelNode *)[self childNodeWithName:@"options"];
     self.headerBck = (SKSpriteNode *)[self childNodeWithName:@"headerBck"];
-    self.bottomBck = (SKSpriteNode *)[self childNodeWithName:@"bottomBck"];
     
     [self prepareSpeedOption];
     [self prepareTitleAndBackToMainMenu];
@@ -100,7 +98,6 @@
 - (void)setColorsOnScreen {
     self.backgroundColor = [UIColor backgroundColor];
     self.headerBck.color = [UIColor optionsHeadingColor];
-    self.bottomBck.color = [UIColor optionsHeadingColor];
 }
 
 - (void)prepareSpeedOption {
@@ -134,11 +131,13 @@
 
     self.difficultyLevelValueLabel.text = [NSString stringWithFormat:@"%ld", [[GameManager sharedManager] difficultyOption]];
     
-    self.difficultyLevelValueAddBcg = [SKSpriteNode spriteNodeWithTexture:nil size:self.difficultyLevelValueAdd.frame.size];
+    self.difficultyLevelValueAddBcg = [SKSpriteNode spriteNodeWithTexture:nil size:[self.difficultyLevelValueAdd sizeWithScaleFactor:4]];
+    self.difficultyLevelValueAddBcg.anchorPoint = CGPointMake(0.5, 0.5);
     self.difficultyLevelValueAddBcg.position = self.difficultyLevelValueAdd.position;
     [self addChild:self.difficultyLevelValueAddBcg];
     
-    self.difficultyLevelValueRemoveBcg = [SKSpriteNode spriteNodeWithTexture:nil size:self.difficultyLevelValueRemove.frame.size];
+    self.difficultyLevelValueRemoveBcg = [SKSpriteNode spriteNodeWithTexture:nil size:[self.difficultyLevelValueRemove sizeWithScaleFactor:4]];
+    self.difficultyLevelValueRemoveBcg.anchorPoint = CGPointMake(0.5, 0.5);
     self.difficultyLevelValueRemoveBcg.position = self.difficultyLevelValueRemove.position;
     [self addChild:self.difficultyLevelValueRemoveBcg];
 }
@@ -152,20 +151,24 @@
     
     self.durationValueLabel.text = [NSString stringWithFormat:@"%.0f", [[GameManager sharedManager] levelDurationOption]];
     
-    self.durationValueAddBcg = [SKSpriteNode spriteNodeWithTexture:nil size:self.durationValueAdd.frame.size];
+    self.durationValueAddBcg = [SKSpriteNode spriteNodeWithTexture:nil size:[self.durationValueAdd sizeWithScaleFactor:4]];
+    self.durationValueAddBcg.anchorPoint = CGPointMake(0.5, 0.5);
     self.durationValueAddBcg.position = self.durationValueAdd.position;
     [self addChild:self.durationValueAddBcg];
     
-    self.difficultyLevelValueRemoveBcg = [SKSpriteNode spriteNodeWithTexture:nil size:self.difficultyLevelValueRemove.frame.size];
-    self.difficultyLevelValueRemoveBcg.position = self.difficultyLevelValueRemove.position;
-    [self addChild:self.difficultyLevelValueRemoveBcg];
+    self.durationValueRemoveBcg = [SKSpriteNode spriteNodeWithTexture:nil size:[self.durationValueRemove sizeWithScaleFactor:4]];
+    self.durationValueRemoveBcg.anchorPoint = CGPointMake(0.5, 0.5);
+    self.durationValueRemoveBcg.position = self.durationValueRemove.position;
+    [self addChild:self.durationValueRemoveBcg];
 }
 
 - (void)prepareTitleAndBackToMainMenu {
     self.backToMainMenu.fontName = @"3Dventure";
     self.optionsTitle.fontName = @"3Dventure";
     
-    self.backToMainMenuBcg = [SKSpriteNode spriteNodeWithTexture:nil size:self.backToMainMenu.frame.size];
+    [self.backToMainMenu addBackgroundWithColor:[UIColor labelBackgroundColor]];
+    
+    self.backToMainMenuBcg = [SKSpriteNode spriteNodeWithTexture:nil size:[self.backToMainMenu sizeWithScaleFactor:2.5]];
     self.backToMainMenuBcg.position = self.backToMainMenu.position;
     [self addChild:self.backToMainMenuBcg];
 }
