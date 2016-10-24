@@ -9,6 +9,6 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface SKLabelNode (Background)
-- (void)addBackgroundWithColor:(UIColor *)color;
+- (void)addBackgroundWithColor:(UIColor *)color animate:(BOOL)shouldAnimate duration:(NSTimeInterval)duration;
 - (CGSize)sizeWithScaleFactor:(CGFloat)factor;
 @end

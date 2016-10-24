@@ -166,7 +166,8 @@
     self.backToMainMenu.fontName = @"3Dventure";
     self.optionsTitle.fontName = @"3Dventure";
     
-    [self.backToMainMenu addBackgroundWithColor:[UIColor labelBackgroundColor]];
+    [self.optionsTitle stackLetterByLetterFromString:@"OPTIONS" withCompletion:nil];
+    [self.backToMainMenu addBackgroundWithColor:[UIColor labelBackgroundColor] animate:NO duration:0];
     
     self.backToMainMenuBcg = [SKSpriteNode spriteNodeWithTexture:nil size:[self.backToMainMenu sizeWithScaleFactor:2.5]];
     self.backToMainMenuBcg.position = self.backToMainMenu.position;
