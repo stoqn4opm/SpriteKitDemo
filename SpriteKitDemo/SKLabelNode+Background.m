@@ -16,7 +16,6 @@
     [self removeFromParent];
     
     SKShapeNode *startGameBckg = [SKShapeNode node];
-//    startGameBckg.anchorPoint = CGPointMake(0.485, 0.2);
     startGameBckg.path = [self paralelogramPathForBackground];
     startGameBckg.position = CGPointMake(self.position.x + 0, self.position.y - 20);
     startGameBckg.fillColor = color;
@@ -27,14 +26,6 @@
         startGameBckg.alpha = 0;
         [startGameBckg runAction:[SKAction fadeInWithDuration:duration]];
     }
-    
-//    CGPathCloseSubpath(p);
-    
-//    SKShapeNode *shape = [SKShapeNode node];
-//    shape.path = [self paralelogramPathForBackground];
-//    shape.fillColor = [UIColor redColor];
-//    shape.strokeColor = [UIColor redColor];
-//    [self addChild:shape];
 }
 
 - (CGSize)sizeWithScaleFactor:(CGFloat)factor {

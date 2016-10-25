@@ -29,6 +29,9 @@
 		326057231DB7795D002747C0 /* 3Dventure.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 326057221DB7795D002747C0 /* 3Dventure.ttf */; };
 		3269CB101DBE309300F59A59 /* SKLabelNode+Background.m in Sources */ = {isa = PBXBuildFile; fileRef = 3269CB0F1DBE309300F59A59 /* SKLabelNode+Background.m */; };
 		3269CB171DBE708600F59A59 /* planetEarthSpinning.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3269CB161DBE708600F59A59 /* planetEarthSpinning.mp4 */; };
+		32F672ED1DBFA3590020A591 /* LevelSelect.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32F672EC1DBFA3590020A591 /* LevelSelect.sks */; };
+		32F672F01DBFAD850020A591 /* Intro.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32F672EF1DBFAD850020A591 /* Intro.sks */; };
+		32F673111DBFB54A0020A591 /* Intro.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F673101DBFB54A0020A591 /* Intro.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +70,10 @@
 		3269CB0E1DBE309300F59A59 /* SKLabelNode+Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKLabelNode+Background.h"; sourceTree = "<group>"; };
 		3269CB0F1DBE309300F59A59 /* SKLabelNode+Background.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKLabelNode+Background.m"; sourceTree = "<group>"; };
 		3269CB161DBE708600F59A59 /* planetEarthSpinning.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = planetEarthSpinning.mp4; sourceTree = "<group>"; };
+		32F672EC1DBFA3590020A591 /* LevelSelect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelSelect.sks; sourceTree = "<group>"; };
+		32F672EF1DBFAD850020A591 /* Intro.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Intro.sks; sourceTree = "<group>"; };
+		32F6730F1DBFB54A0020A591 /* Intro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Intro.h; sourceTree = "<group>"; };
+		32F673101DBFB54A0020A591 /* Intro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Intro.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +100,8 @@
 		323AD76A1DB8CD9800E1C90C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				32F672EE1DBFAD0B0020A591 /* Intro */,
+				32F672EB1DBFA3240020A591 /* Level Select */,
 				32565A5E1DB121550063B6FD /* Main Menu */,
 				32565A5A1DB11BAF0063B6FD /* Game Over */,
 				32565A561DB11B230063B6FD /* Game Level */,
@@ -193,6 +202,24 @@
 			name = "Dynamic Level";
 			sourceTree = "<group>";
 		};
+		32F672EB1DBFA3240020A591 /* Level Select */ = {
+			isa = PBXGroup;
+			children = (
+				32F672EC1DBFA3590020A591 /* LevelSelect.sks */,
+			);
+			name = "Level Select";
+			sourceTree = "<group>";
+		};
+		32F672EE1DBFAD0B0020A591 /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				32F672EF1DBFAD850020A591 /* Intro.sks */,
+				32F6730F1DBFB54A0020A591 /* Intro.h */,
+				32F673101DBFB54A0020A591 /* Intro.m */,
+			);
+			name = Intro;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -252,6 +279,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32F672F01DBFAD850020A591 /* Intro.sks in Resources */,
 				32565A461DB0D47E0063B6FD /* Main.storyboard in Resources */,
 				32565A621DB1219E0063B6FD /* MainMenu.sks in Resources */,
 				32565A3B1DB0D47E0063B6FD /* GameScene.sks in Resources */,
@@ -259,6 +287,7 @@
 				3269CB171DBE708600F59A59 /* planetEarthSpinning.mp4 in Resources */,
 				32565A551DB11B160063B6FD /* GameOverScene.sks in Resources */,
 				326057231DB7795D002747C0 /* 3Dventure.ttf in Resources */,
+				32F672ED1DBFA3590020A591 /* LevelSelect.sks in Resources */,
 				323AD7711DB8E28900E1C90C /* Options.sks in Resources */,
 				323AD7731DB91D0600E1C90C /* colorPallete.png in Resources */,
 				32565A4B1DB0D47E0063B6FD /* LaunchScreen.storyboard in Resources */,
@@ -281,6 +310,7 @@
 				323AD7791DB91DA800E1C90C /* UIColor+AppColors.m in Sources */,
 				323AD76F1DB8E27100E1C90C /* Options.m in Sources */,
 				32565A391DB0D47E0063B6FD /* AppDelegate.m in Sources */,
+				32F673111DBFB54A0020A591 /* Intro.m in Sources */,
 				321C6BA71DB929FC0069AB29 /* SKLabelNode+CommonAnimations.m in Sources */,
 				32565A401DB0D47E0063B6FD /* GameScene.m in Sources */,
 				32565A361DB0D47E0063B6FD /* main.m in Sources */,
