@@ -59,6 +59,11 @@ NSString const * OptionsChangedDuration = @"optionsChangedDuration";
 
 #pragma mark - Levels Loading
 
+- (void)loadIntroScene {
+    SKScene *introScene = [SKScene nodeWithFileNamed:@"Intro"];
+    [self loadScene:introScene];
+}
+
 - (void)loadLevelScene {
     SKScene *gameScene = [SKScene nodeWithFileNamed:@"GameScene"];
     [self loadScene:gameScene];

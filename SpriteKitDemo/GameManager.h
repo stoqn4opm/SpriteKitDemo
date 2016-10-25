@@ -39,6 +39,7 @@ extern NSString const * OptionsChangedDuration;
 
 #pragma mark - Loading Scenes
 
+- (void)loadIntroScene;
 - (void)loadMainMenuSceneWithEntranceAnimationsEnabled:(BOOL)animationsEnabled;
 - (void)loadLevelScene;
 - (void)loadGameOverScene;
