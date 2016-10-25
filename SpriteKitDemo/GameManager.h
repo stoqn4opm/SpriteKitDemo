@@ -45,6 +45,8 @@ extern NSString const * OptionsChangedDuration;
 - (void)loadDynamicLevelScene;
 - (void)loadOptionsScene;
 
+- (SKVideoNode *)videoBackgroundNode;
+
 #pragma mark - Options
 
 @property (assign, nonatomic) LevelSpeed levelSpeedOption;

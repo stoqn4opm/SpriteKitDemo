@@ -22,6 +22,12 @@ NSString const * OptionsChangedOldSpeedValue = @"optionsChangedSpeedOld";
 NSString const * OptionsChangedNewSpeedValue = @"optionsChangedSpeedNew";
 NSString const * OptionsChangedDuration = @"optionsChangedDuration";
 
+@interface GameManager()
+
+@property (strong, nonatomic) SKVideoNode *videoBackgroundNode;
+
+@end
+
 @implementation GameManager
 
 + (id)sharedManager {
@@ -78,8 +84,22 @@ NSString const * OptionsChangedDuration = @"optionsChangedDuration";
 - (void)loadSceneWithName:(NSString *)sceneName {
     GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:sceneName];
     scene.scaleMode = SKSceneScaleModeAspectFill;
-    SKTransition *transition = [SKTransition fadeWithColor:[UIColor backgroundColor] duration:0.5];
+    SKTransition *transition = [SKTransition fadeWithColor:[UIColor blackColor] duration:0.5];
     [self.spriteKitView presentScene:scene transition:transition];
+}
+
+- (SKVideoNode *)videoBackgroundNode {
+    if (_videoBackgroundNode) {
+        return _videoBackgroundNode;
+    }
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    _videoBackgroundNode = [SKVideoNode videoNodeWithVideoFileNamed:@"planetEarthSpinning.mp4"];
+    _videoBackgroundNode.size = CGSizeMake(screenSize.height, screenSize.width);
+    _videoBackgroundNode.zRotation =  - M_PI_2;
+    
+    _videoBackgroundNode.alpha = 0;
+    _videoBackgroundNode.paused = YES;
+    return _videoBackgroundNode;
 }
 
 #pragma mark - Options Setting

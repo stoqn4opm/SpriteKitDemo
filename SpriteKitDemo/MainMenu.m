@@ -52,6 +52,8 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
+    MainMenu __weak  *weakSelf = self;
+    
     CGPoint touchPoint = [touches.anyObject locationInNode:self];
     SKNode *touchedNode = [self nodeAtPoint:touchPoint];
     
@@ -64,7 +66,16 @@
     else if ([touchedNode isEqualToNode:self.optionNode] ||
              [touchedNode isEqualToNode:self.optionBckgNode]) {
         [self.optionNode makeControlPopWithCompletion:^{
-            [[GameManager sharedManager] loadOptionsScene];
+            
+            SKAction *colorizeAction = [SKAction colorizeWithColor:[UIColor blackColor] colorBlendFactor:1 duration:0.8];
+            [weakSelf runAction:colorizeAction completion:^{
+                
+                SKAction *fadeOut = [SKAction fadeOutWithDuration:0.2];
+                [weakSelf.videoBackgroundNode runAction:fadeOut completion:^{
+                    [weakSelf.videoBackgroundNode removeFromParent];
+                    [[GameManager sharedManager] loadOptionsScene];
+                }];
+            }];
         }];
     } else {
         [self presentControlsWithNoAnimation];
@@ -74,12 +85,9 @@
 #pragma mark - Video Background
 
 - (void)setupVideoBackground {
-    self.videoBackgroundNode = [SKVideoNode videoNodeWithVideoFileNamed:@"planetEarthSpinning.mp4"];
+    self.videoBackgroundNode = [[GameManager sharedManager] videoBackgroundNode];
     self.videoBackgroundNode.size = CGSizeMake(self.frame.size.height, self.frame.size.width);
-    self.videoBackgroundNode.zRotation =  - M_PI_2;
     [self addChild:self.videoBackgroundNode];
-    self.videoBackgroundNode.alpha = 0;
-    self.videoBackgroundNode.paused = YES;
     
     [self.titleNode removeFromParent];
     [self addChild:self.titleNode];
@@ -168,9 +176,7 @@
     [self flashScreenWithCompletion:^{
         [weakSelf showControlsWithCompletion:^{
             
-//            [weakSelf.videoBackgroundNode setPaused:NO];
-
-            [[[GameScenesManager sharedManager] videoBackgroundPlayer] play];
+            [weakSelf.videoBackgroundNode setPaused:NO];
             
             SKAction *fadeInVideo = [SKAction fadeAlphaTo:0.8 duration:2];
             [weakSelf.videoBackgroundNode runAction:fadeInVideo completion:^{

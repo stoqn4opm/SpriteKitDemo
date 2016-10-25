@@ -51,7 +51,7 @@
 @property (strong, nonatomic) SKSpriteNode *durationValueRemoveBcg;
 @property (assign, nonatomic) NSUInteger difficultyOption;
 
-
+@property (nonatomic, strong) SKVideoNode *videoBackgroundNode;
 @end
 
 @implementation Options
@@ -84,8 +84,8 @@
     [self prepareDifficultyOption];
     [self prepareDurationOption];
     
-    
     [self setColorsOnScreen];
+    [self setupVideoBackground];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionsUpdated:) name:(NSString *)OptionsChangedNotification object:nil];
 }
 
@@ -96,7 +96,7 @@
 #pragma mark - Initialization Helpers
 
 - (void)setColorsOnScreen {
-    self.backgroundColor = [UIColor backgroundColor];
+//    self.backgroundColor = [UIColor backgroundColor];
     self.headerBck.color = [UIColor optionsHeadingColor];
 }
 
@@ -174,6 +174,28 @@
     [self addChild:self.backToMainMenuBcg];
 }
 
+#pragma mark - Video Background
+
+- (void)setupVideoBackground {
+    self.videoBackgroundNode = [[GameManager sharedManager] videoBackgroundNode];
+    self.videoBackgroundNode.size = CGSizeMake(self.frame.size.height, self.frame.size.width);
+    [self addChild:self.videoBackgroundNode];
+    
+    for (SKNode *node in self.children) {
+        if (![node isEqual:self.videoBackgroundNode]) {
+            [node removeFromParent];
+            [self addChild:node];
+        }
+    }
+    
+    Options __weak *weakSelf = self;
+    SKAction *fadeInAction = [SKAction fadeAlphaTo:0.8 duration:0.2];
+    [self.videoBackgroundNode runAction:fadeInAction completion:^{
+        SKAction *colorizeAction = [SKAction colorizeWithColor:[UIColor labelBackgroundColor] colorBlendFactor:1 duration:0.8];
+        [weakSelf runAction:colorizeAction];
+    }];
+}
+
 #pragma mark - User Input Handling
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -233,11 +255,21 @@
 }
 
 - (void)hitTestBackToMainMenuWithTouchedNode:(SKNode *)touchedNode {
+    Options __weak *weakSelf = self;
     
     if ([touchedNode isEqualToNode:self.backToMainMenu] ||
         [touchedNode isEqualToNode:self.backToMainMenuBcg]) {
         [self.backToMainMenu makeControlPopWithCompletion:^{
-            [[GameManager sharedManager] loadMainMenuScene];
+            
+            SKAction *colorizeAction = [SKAction colorizeWithColor:[UIColor blackColor] colorBlendFactor:1 duration:0.8];
+            [weakSelf runAction:colorizeAction completion:^{
+                
+                SKAction *fadeOut = [SKAction fadeOutWithDuration:0.2];
+                [weakSelf.videoBackgroundNode runAction:fadeOut completion:^{
+                    [weakSelf.videoBackgroundNode removeFromParent];
+                    [[GameManager sharedManager] loadMainMenuScene];
+                }];
+            }];
         }];
     }
 }
