@@ -13,7 +13,7 @@
 
 #define GAME_TITLE @"SpriteKit"
 #define GAME_TITLE_SECOND_LINE @"DEMO"
-
+#define MAIN_MENU_ENTRANCE_ANIMATIONS_DURATION 10
 @interface MainMenu()
 
 @property (nonatomic, strong) SKLabelNode *titleNode;
@@ -25,6 +25,9 @@
 @property (nonatomic, strong) SKSpriteNode *optionBckgNode;
 
 @property (nonatomic, strong) SKVideoNode *videoBackgroundNode;
+
+@property (nonatomic, strong) NSDate *entranceAnimationsStartTime;
+@property (nonatomic, assign) BOOL entranceAnimationsAlreadySkipped;
 @end
 
 @implementation MainMenu
@@ -45,7 +48,13 @@
     self.startGameNode.fontName = @"3Dventure";
     self.optionNode.fontName = @"3Dventure";
     
-    [self executeGameTitleAnimation];
+    [self setupVideoBackground];
+    
+    if (self.enableEntranceAnimations) {
+        [self executeGameTitleAnimation];
+    } else {
+        [self presentControlsWithNoAnimation];
+    }
 }
 
 #pragma mark - User Input
@@ -78,7 +87,22 @@
             }];
         }];
     } else {
-        [self presentControlsWithNoAnimation];
+        [self handleAnimationsSkipTouch];
+    }
+}
+
+- (void)handleAnimationsSkipTouch {
+    NSDate *now = [NSDate date];
+    BOOL nowIsBeforeEntranceAnimationsAreCompleted =
+    [now timeIntervalSinceDate:self.entranceAnimationsStartTime] < MAIN_MENU_ENTRANCE_ANIMATIONS_DURATION;
+    
+    if (nowIsBeforeEntranceAnimationsAreCompleted && !self.entranceAnimationsAlreadySkipped) {
+        
+        self.entranceAnimationsAlreadySkipped = YES;
+        
+        [self flashScreenWithCompletion:^{
+            [self presentControlsWithNoAnimation];
+        }];
     }
 }
 
@@ -99,27 +123,30 @@
 #pragma mark - Animations
 
 - (void)presentControlsWithNoAnimation {
+    
     for (SKNode *node in self.children) {
         [node removeAllActions];
     }
     self.titleNode.text = GAME_TITLE;
-    self.titleNode.position = CGPointMake(self.titleNode.position.x, self.titleNode.position.y - 100);
+    self.titleNode.position = CGPointMake(0, 407.6879);
     self.titleNode.xScale = self.titleNode.yScale = 1.305;
     self.titleSecondNode.text = GAME_TITLE_SECOND_LINE;
     self.titleSecondNode.alpha = 1;
-    self.titleSecondNode.position = CGPointMake(self.titleSecondNode.position.x, self.titleSecondNode.position.y + 200);
-    [self flashScreenAndPresentControls];
+    self.titleSecondNode.position = CGPointMake(0, 200);
+    [self showControls];
 }
 
 - (void)executeGameTitleAnimation {
     MainMenu __weak *weakSelf = self;
 
-    [self setupVideoBackground];
+    self.entranceAnimationsStartTime = [NSDate date];
     
     [self.titleNode stackLetterByLetterFromString:GAME_TITLE withCompletion:^{
         [weakSelf scaleUpAndMoveDownGameTitleWithCompletion:^{
             [weakSelf presentSecondLineWithCompletionWithCompletion:^{
-                [weakSelf flashScreenAndPresentControls];
+                [weakSelf flashScreenWithCompletion:^{
+                    [weakSelf showControls];
+                }];
             }];
         }];
     }];
@@ -171,21 +198,19 @@
     }];
 }
 
-- (void)flashScreenAndPresentControls {
+- (void)showControls {
     MainMenu __weak *weakSelf = self;
-    [self flashScreenWithCompletion:^{
-        [weakSelf showControlsWithCompletion:^{
+    [weakSelf showControlsWithCompletion:^{
+        
+        [weakSelf.videoBackgroundNode setPaused:NO];
+        
+        SKAction *fadeInVideo = [SKAction fadeAlphaTo:0.8 duration:2];
+        [weakSelf.videoBackgroundNode runAction:fadeInVideo completion:^{
             
-            [weakSelf.videoBackgroundNode setPaused:NO];
-            
-            SKAction *fadeInVideo = [SKAction fadeAlphaTo:0.8 duration:2];
-            [weakSelf.videoBackgroundNode runAction:fadeInVideo completion:^{
-                
-                SKAction *colorizeAction = [SKAction colorizeWithColor:[UIColor labelBackgroundColor] colorBlendFactor:1 duration:0.8];
-                [weakSelf runAction:colorizeAction];
-            }];
-            
+            SKAction *colorizeAction = [SKAction colorizeWithColor:[UIColor labelBackgroundColor] colorBlendFactor:1 duration:0.8];
+            [weakSelf runAction:colorizeAction];
         }];
+        
     }];
 }
 @end

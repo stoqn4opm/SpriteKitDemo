@@ -18,7 +18,7 @@
 @property (strong, nonatomic) SKLabelNode *optionsTitle;
 
 @property (strong, nonatomic) SKSpriteNode *headerBck;
-
+@property (strong, nonatomic) SKSpriteNode *bottomBck;
 // Speed option related properties
 
 @property (strong, nonatomic) SKLabelNode *speedLabel;
@@ -78,6 +78,7 @@
     self.backToMainMenu = (SKLabelNode *)[self childNodeWithName:@"back"];
     self.optionsTitle = (SKLabelNode *)[self childNodeWithName:@"options"];
     self.headerBck = (SKSpriteNode *)[self childNodeWithName:@"headerBck"];
+    self.bottomBck = (SKSpriteNode *)[self childNodeWithName:@"bottomBck"];
     
     [self prepareSpeedOption];
     [self prepareTitleAndBackToMainMenu];
@@ -98,6 +99,7 @@
 - (void)setColorsOnScreen {
 //    self.backgroundColor = [UIColor backgroundColor];
     self.headerBck.color = [UIColor optionsHeadingColor];
+    self.bottomBck.color = [UIColor optionsHeadingColor];
 }
 
 - (void)prepareSpeedOption {
@@ -166,6 +168,7 @@
     self.backToMainMenu.fontName = @"3Dventure";
     self.optionsTitle.fontName = @"3Dventure";
     
+    self.backToMainMenu.position = self.bottomBck.position;
     [self.optionsTitle stackLetterByLetterFromString:@"OPTIONS" withCompletion:nil];
     [self.backToMainMenu addBackgroundWithColor:[UIColor labelBackgroundColor] animate:NO duration:0];
     
@@ -267,7 +270,7 @@
                 SKAction *fadeOut = [SKAction fadeOutWithDuration:0.2];
                 [weakSelf.videoBackgroundNode runAction:fadeOut completion:^{
                     [weakSelf.videoBackgroundNode removeFromParent];
-                    [[GameManager sharedManager] loadMainMenuScene];
+                    [[GameManager sharedManager] loadMainMenuSceneWithEntranceAnimationsEnabled:NO];
                 }];
             }];
         }];

@@ -10,4 +10,6 @@
 
 @interface MainMenu : SKScene
 
+@property (assign, nonatomic) BOOL enableEntranceAnimations;
+
 @end

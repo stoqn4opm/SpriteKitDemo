@@ -9,6 +9,7 @@
 #import "GameManager.h"
 #import "GameScene.h"
 #import "DynamicLevelScene.h"
+#import "MainMenu.h"
 
 uint32_t const MainCharacterBitMask    = 0b01;
 uint32_t const BlocksBitMask           = 0b10;
@@ -59,34 +60,39 @@ NSString const * OptionsChangedDuration = @"optionsChangedDuration";
 #pragma mark - Levels Loading
 
 - (void)loadLevelScene {
-    [self loadSceneWithName:@"GameScene"];
+    SKScene *gameScene = [SKScene nodeWithFileNamed:@"GameScene"];
+    [self loadScene:gameScene];
 }
 
 - (void)loadGameOverScene {
-    [self loadSceneWithName:@"GameOverScene"];
+    SKScene *gameOverScene = [SKScene nodeWithFileNamed:@"GameOverScene"];
+    [self loadScene:gameOverScene];
 }
 
-- (void)loadMainMenuScene {
-    [self loadSceneWithName:@"MainMenu"];
+- (void)loadMainMenuSceneWithEntranceAnimationsEnabled:(BOOL)animationsEnabled {
+    MainMenu *gameScene = (MainMenu *)[SKScene nodeWithFileNamed:@"MainMenu"];
+    gameScene.enableEntranceAnimations = animationsEnabled;
+    [self loadScene:gameScene];
 }
 
 - (void)loadDynamicLevelScene {
     
-    DynamicLevelScene *dLevel = [[DynamicLevelScene alloc] initWithSceneSize:[self screenSize]  levelLength:self.levelDurationOption levelSpeed:self.levelSpeedOption levelDificulty:self.difficultyOption];
-    [self.spriteKitView presentScene:dLevel];
-    dLevel.scaleMode = SKSceneScaleModeAspectFit;
+    DynamicLevelScene *dLevel = [[DynamicLevelScene alloc] initWithSceneSize:[self screenSize] levelLength:self.levelDurationOption levelSpeed:self.levelSpeedOption levelDificulty:self.difficultyOption];
+    [self loadScene:dLevel];
 }
 
 - (void)loadOptionsScene {
-    [self loadSceneWithName:@"Options"];
+    SKScene *options = [SKScene nodeWithFileNamed:@"Options"];
+    [self loadScene:options];
 }
 
-- (void)loadSceneWithName:(NSString *)sceneName {
-    GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:sceneName];
+- (void)loadScene:(SKScene *)scene {
     scene.scaleMode = SKSceneScaleModeAspectFill;
     SKTransition *transition = [SKTransition fadeWithColor:[UIColor blackColor] duration:0.5];
     [self.spriteKitView presentScene:scene transition:transition];
 }
+
+#pragma mark - Video Background
 
 - (SKVideoNode *)videoBackgroundNode {
     if (_videoBackgroundNode) {
@@ -99,7 +105,12 @@ NSString const * OptionsChangedDuration = @"optionsChangedDuration";
     
     _videoBackgroundNode.alpha = 0;
     _videoBackgroundNode.paused = YES;
+    
     return _videoBackgroundNode;
+}
+
+- (void)playVideoBackgroundIfNeeded {
+    _videoBackgroundNode.paused = NO;
 }
 
 #pragma mark - Options Setting
