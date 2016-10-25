@@ -66,6 +66,8 @@
         [self.optionNode makeControlPopWithCompletion:^{
             [[GameManager sharedManager] loadOptionsScene];
         }];
+    } else {
+        [self presentControlsWithNoAnimation];
     }
 }
 
@@ -88,6 +90,19 @@
 
 #pragma mark - Animations
 
+- (void)presentControlsWithNoAnimation {
+    for (SKNode *node in self.children) {
+        [node removeAllActions];
+    }
+    self.titleNode.text = GAME_TITLE;
+    self.titleNode.position = CGPointMake(self.titleNode.position.x, self.titleNode.position.y - 100);
+    self.titleNode.xScale = self.titleNode.yScale = 1.305;
+    self.titleSecondNode.text = GAME_TITLE_SECOND_LINE;
+    self.titleSecondNode.alpha = 1;
+    self.titleSecondNode.position = CGPointMake(self.titleSecondNode.position.x, self.titleSecondNode.position.y + 200);
+    [self flashScreenAndPresentControls];
+}
+
 - (void)executeGameTitleAnimation {
     MainMenu __weak *weakSelf = self;
 
@@ -96,20 +111,7 @@
     [self.titleNode stackLetterByLetterFromString:GAME_TITLE withCompletion:^{
         [weakSelf scaleUpAndMoveDownGameTitleWithCompletion:^{
             [weakSelf presentSecondLineWithCompletionWithCompletion:^{
-                [weakSelf flashScreenWithCompletion:^{
-                    [weakSelf showControlsWithCompletion:^{
-                        
-                        [weakSelf.videoBackgroundNode setPaused:NO];
-                        
-                        SKAction *fadeInVideo = [SKAction fadeAlphaTo:0.8 duration:2];
-                        [weakSelf.videoBackgroundNode runAction:fadeInVideo completion:^{
-                            
-                            SKAction *colorizeAction = [SKAction colorizeWithColor:[UIColor labelBackgroundColor] colorBlendFactor:1 duration:0.8];
-                            [weakSelf runAction:colorizeAction];
-                        }];
-                        
-                    }];
-                }];
+                [weakSelf flashScreenAndPresentControls];
             }];
         }];
     }];
@@ -158,6 +160,26 @@
     
     [self.optionNode runAction:fadeInAction completion:^{
         [self.optionNode addBackgroundWithColor:[UIColor labelBackgroundColor] animate:YES duration:1];
+    }];
+}
+
+- (void)flashScreenAndPresentControls {
+    MainMenu __weak *weakSelf = self;
+    [self flashScreenWithCompletion:^{
+        [weakSelf showControlsWithCompletion:^{
+            
+//            [weakSelf.videoBackgroundNode setPaused:NO];
+
+            [[[GameScenesManager sharedManager] videoBackgroundPlayer] play];
+            
+            SKAction *fadeInVideo = [SKAction fadeAlphaTo:0.8 duration:2];
+            [weakSelf.videoBackgroundNode runAction:fadeInVideo completion:^{
+                
+                SKAction *colorizeAction = [SKAction colorizeWithColor:[UIColor labelBackgroundColor] colorBlendFactor:1 duration:0.8];
+                [weakSelf runAction:colorizeAction];
+            }];
+            
+        }];
     }];
 }
 @end
