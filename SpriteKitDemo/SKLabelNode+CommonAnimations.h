@@ -13,4 +13,5 @@
 - (void)makeLabelGrowWithColor:(UIColor *)color;
 - (void)makeLabelShrink;
 - (void)makeControlPopWithCompletion:(void (^)())completionBlock;
+- (void)stackLetterByLetterFromString:(NSString *)string withCompletion:(void (^)())completionblock;
 @end

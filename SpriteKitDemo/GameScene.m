@@ -85,7 +85,7 @@ static const NSInteger LevelTimeLength = 10; // in seconds
         }];
     }
     else if (firstBody.categoryBitMask == LevelEndCategory || secondBody.categoryBitMask == LevelEndCategory) {
-        [[GameManager sharedManager] loadMainMenuScene];
+        [[GameManager sharedManager] loadMainMenuSceneWithEntranceAnimationsEnabled:NO];
     }
 }
 

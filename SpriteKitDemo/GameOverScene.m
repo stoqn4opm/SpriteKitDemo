@@ -23,7 +23,7 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     SKAction *fadeOutAction = [SKAction fadeOutWithDuration:2];
     [self.gameOver runAction:fadeOutAction completion:^{
-        [[GameManager sharedManager] loadMainMenuScene];
+        [[GameManager sharedManager] loadMainMenuSceneWithEntranceAnimationsEnabled:YES];
     }];
 }
 

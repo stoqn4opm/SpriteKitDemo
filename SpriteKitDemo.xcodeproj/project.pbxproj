@@ -28,6 +28,7 @@
 		325833961DB4F1A600D1B154 /* DynamicLevelScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 325833951DB4F1A600D1B154 /* DynamicLevelScene.m */; };
 		326057231DB7795D002747C0 /* 3Dventure.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 326057221DB7795D002747C0 /* 3Dventure.ttf */; };
 		3269CB101DBE309300F59A59 /* SKLabelNode+Background.m in Sources */ = {isa = PBXBuildFile; fileRef = 3269CB0F1DBE309300F59A59 /* SKLabelNode+Background.m */; };
+		3269CB171DBE708600F59A59 /* planetEarthSpinning.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3269CB161DBE708600F59A59 /* planetEarthSpinning.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		326057221DB7795D002747C0 /* 3Dventure.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 3Dventure.ttf; sourceTree = "<group>"; };
 		3269CB0E1DBE309300F59A59 /* SKLabelNode+Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKLabelNode+Background.h"; sourceTree = "<group>"; };
 		3269CB0F1DBE309300F59A59 /* SKLabelNode+Background.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKLabelNode+Background.m"; sourceTree = "<group>"; };
+		3269CB161DBE708600F59A59 /* planetEarthSpinning.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = planetEarthSpinning.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 				323AD76A1DB8CD9800E1C90C /* Scenes */,
 				32565A441DB0D47E0063B6FD /* Main.storyboard */,
 				32565A471DB0D47E0063B6FD /* Assets.xcassets */,
+				3269CB161DBE708600F59A59 /* planetEarthSpinning.mp4 */,
 				323AD7721DB91D0600E1C90C /* colorPallete.png */,
 				32565A491DB0D47E0063B6FD /* LaunchScreen.storyboard */,
 				32565A4C1DB0D47E0063B6FD /* Info.plist */,
@@ -253,6 +256,7 @@
 				32565A621DB1219E0063B6FD /* MainMenu.sks in Resources */,
 				32565A3B1DB0D47E0063B6FD /* GameScene.sks in Resources */,
 				32565A481DB0D47E0063B6FD /* Assets.xcassets in Resources */,
+				3269CB171DBE708600F59A59 /* planetEarthSpinning.mp4 in Resources */,
 				32565A551DB11B160063B6FD /* GameOverScene.sks in Resources */,
 				326057231DB7795D002747C0 /* 3Dventure.ttf in Resources */,
 				323AD7711DB8E28900E1C90C /* Options.sks in Resources */,
