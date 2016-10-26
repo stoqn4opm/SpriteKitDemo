@@ -109,10 +109,7 @@
 		323AD76A1DB8CD9800E1C90C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				3246741D1DC0C5C9009EC784 /* RootNavigationScene.h */,
-				3246741E1DC0C5C9009EC784 /* RootNavigationScene.m */,
-				324674201DC0D1D0009EC784 /* NavigationScene.h */,
-				324674211DC0D1D0009EC784 /* NavigationScene.m */,
+				324674271DC0E98E009EC784 /* Base SKScenes */,
 				32F672EE1DBFAD0B0020A591 /* Intro */,
 				32F672EB1DBFA3240020A591 /* Level Select */,
 				32565A5E1DB121550063B6FD /* Main Menu */,
@@ -122,6 +119,62 @@
 				325833931DB4F18100D1B154 /* Dynamic Level */,
 			);
 			name = Scenes;
+			sourceTree = "<group>";
+		};
+		324674231DC0E8E6009EC784 /* UI Related Categories */ = {
+			isa = PBXGroup;
+			children = (
+				323AD7771DB91DA800E1C90C /* UIColor+AppColors.h */,
+				323AD7781DB91DA800E1C90C /* UIColor+AppColors.m */,
+				321C6BA51DB929FC0069AB29 /* SKLabelNode+CommonAnimations.h */,
+				321C6BA61DB929FC0069AB29 /* SKLabelNode+CommonAnimations.m */,
+				3269CB0E1DBE309300F59A59 /* SKLabelNode+Background.h */,
+				3269CB0F1DBE309300F59A59 /* SKLabelNode+Background.m */,
+			);
+			name = "UI Related Categories";
+			sourceTree = "<group>";
+		};
+		324674241DC0E910009EC784 /* Game Manager */ = {
+			isa = PBXGroup;
+			children = (
+				32565A5B1DB11D060063B6FD /* GameManager.h */,
+				32565A5C1DB11D060063B6FD /* GameManager.m */,
+			);
+			name = "Game Manager";
+			sourceTree = "<group>";
+		};
+		324674251DC0E93B009EC784 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				32565A471DB0D47E0063B6FD /* Assets.xcassets */,
+				3269CB161DBE708600F59A59 /* planetEarthSpinning.mp4 */,
+				323AD7721DB91D0600E1C90C /* colorPallete.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		324674261DC0E95C009EC784 /* APP Delegate & ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				32565A371DB0D47E0063B6FD /* AppDelegate.h */,
+				32565A381DB0D47E0063B6FD /* AppDelegate.m */,
+				32565A411DB0D47E0063B6FD /* GameViewController.h */,
+				32565A421DB0D47E0063B6FD /* GameViewController.m */,
+				32565A441DB0D47E0063B6FD /* Main.storyboard */,
+				32565A491DB0D47E0063B6FD /* LaunchScreen.storyboard */,
+			);
+			name = "APP Delegate & ViewControllers";
+			sourceTree = "<group>";
+		};
+		324674271DC0E98E009EC784 /* Base SKScenes */ = {
+			isa = PBXGroup;
+			children = (
+				3246741D1DC0C5C9009EC784 /* RootNavigationScene.h */,
+				3246741E1DC0C5C9009EC784 /* RootNavigationScene.m */,
+				324674201DC0D1D0009EC784 /* NavigationScene.h */,
+				324674211DC0D1D0009EC784 /* NavigationScene.m */,
+			);
+			name = "Base SKScenes";
 			sourceTree = "<group>";
 		};
 		32565A281DB0D47E0063B6FD = {
@@ -143,24 +196,11 @@
 		32565A331DB0D47E0063B6FD /* SpriteKitDemo */ = {
 			isa = PBXGroup;
 			children = (
-				32565A371DB0D47E0063B6FD /* AppDelegate.h */,
-				32565A381DB0D47E0063B6FD /* AppDelegate.m */,
-				32565A411DB0D47E0063B6FD /* GameViewController.h */,
-				32565A421DB0D47E0063B6FD /* GameViewController.m */,
-				32565A5B1DB11D060063B6FD /* GameManager.h */,
-				32565A5C1DB11D060063B6FD /* GameManager.m */,
-				323AD7771DB91DA800E1C90C /* UIColor+AppColors.h */,
-				323AD7781DB91DA800E1C90C /* UIColor+AppColors.m */,
-				321C6BA51DB929FC0069AB29 /* SKLabelNode+CommonAnimations.h */,
-				321C6BA61DB929FC0069AB29 /* SKLabelNode+CommonAnimations.m */,
-				3269CB0E1DBE309300F59A59 /* SKLabelNode+Background.h */,
-				3269CB0F1DBE309300F59A59 /* SKLabelNode+Background.m */,
+				324674261DC0E95C009EC784 /* APP Delegate & ViewControllers */,
+				324674241DC0E910009EC784 /* Game Manager */,
+				324674231DC0E8E6009EC784 /* UI Related Categories */,
 				323AD76A1DB8CD9800E1C90C /* Scenes */,
-				32565A441DB0D47E0063B6FD /* Main.storyboard */,
-				32565A471DB0D47E0063B6FD /* Assets.xcassets */,
-				3269CB161DBE708600F59A59 /* planetEarthSpinning.mp4 */,
-				323AD7721DB91D0600E1C90C /* colorPallete.png */,
-				32565A491DB0D47E0063B6FD /* LaunchScreen.storyboard */,
+				324674251DC0E93B009EC784 /* Resources */,
 				32565A4C1DB0D47E0063B6FD /* Info.plist */,
 				32565A341DB0D47E0063B6FD /* Supporting Files */,
 			);
