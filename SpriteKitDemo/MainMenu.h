@@ -7,8 +7,9 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "RootNavigationScene.h"
 
-@interface MainMenu : SKScene
+@interface MainMenu : RootNavigationScene
 
 @property (assign, nonatomic) BOOL enableEntranceAnimations;
 

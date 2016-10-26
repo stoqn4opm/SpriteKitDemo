@@ -7,7 +7,8 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "NavigationScene.h"
 
-@interface LevelSelect : SKScene
+@interface LevelSelect : NavigationScene
 
 @end

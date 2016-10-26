@@ -17,7 +17,7 @@
     
     SKShapeNode *startGameBckg = [SKShapeNode node];
     startGameBckg.path = [self paralelogramPathForBackground];
-    startGameBckg.position = CGPointMake(self.position.x + 0, self.position.y - 20);
+    startGameBckg.position = CGPointMake(self.position.x + 0, self.position.y - .2 * self.frame.size.height);
     startGameBckg.fillColor = color;
     startGameBckg.strokeColor = color;
     [parent addChild:startGameBckg];

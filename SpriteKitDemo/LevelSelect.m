@@ -10,4 +10,10 @@
 
 @implementation LevelSelect
 
+- (void)didMoveToView:(SKView *)view {
+    self.title = @"LEVEL SELECT";
+    self.fontSize = 90;
+    [super didMoveToView:view];
+}
+
 @end

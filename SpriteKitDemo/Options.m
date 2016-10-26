@@ -13,12 +13,6 @@
 
 @interface Options()
 
-@property (strong, nonatomic) SKLabelNode *backToMainMenu;
-@property (strong, nonatomic) SKSpriteNode *backToMainMenuBcg;
-@property (strong, nonatomic) SKLabelNode *optionsTitle;
-
-@property (strong, nonatomic) SKSpriteNode *headerBck;
-@property (strong, nonatomic) SKSpriteNode *bottomBck;
 // Speed option related properties
 
 @property (strong, nonatomic) SKLabelNode *speedLabel;
@@ -51,7 +45,6 @@
 @property (strong, nonatomic) SKSpriteNode *durationValueRemoveBcg;
 @property (assign, nonatomic) NSUInteger difficultyOption;
 
-@property (nonatomic, strong) SKVideoNode *videoBackgroundNode;
 @end
 
 @implementation Options
@@ -59,6 +52,10 @@
 #pragma mark - Initialization Code
 
 - (void)didMoveToView:(SKView *)view {
+    
+    self.title = @"Options";
+    self.fontSize = 144;
+    [super didMoveToView:view];
     
     self.speedLabel = (SKLabelNode *)[self childNodeWithName:@"chooseSpeed"];
     self.speedSlowLabel = (SKLabelNode *)[self childNodeWithName:@"speedSlow"];
@@ -75,18 +72,10 @@
     self.durationValueAdd = (SKLabelNode *)[self childNodeWithName:@"durationAdd"];
     self.durationValueRemove = (SKLabelNode *)[self childNodeWithName:@"durationRemove"];
     
-    self.backToMainMenu = (SKLabelNode *)[self childNodeWithName:@"back"];
-    self.optionsTitle = (SKLabelNode *)[self childNodeWithName:@"options"];
-    self.headerBck = (SKSpriteNode *)[self childNodeWithName:@"headerBck"];
-    self.bottomBck = (SKSpriteNode *)[self childNodeWithName:@"bottomBck"];
-    
     [self prepareSpeedOption];
-    [self prepareTitleAndBackToMainMenu];
     [self prepareDifficultyOption];
     [self prepareDurationOption];
     
-    [self setColorsOnScreen];
-    [self setupVideoBackground];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionsUpdated:) name:(NSString *)OptionsChangedNotification object:nil];
 }
 
@@ -95,12 +84,6 @@
 }
 
 #pragma mark - Initialization Helpers
-
-- (void)setColorsOnScreen {
-//    self.backgroundColor = [UIColor backgroundColor];
-    self.headerBck.color = [UIColor optionsHeadingColor];
-    self.bottomBck.color = [UIColor optionsHeadingColor];
-}
 
 - (void)prepareSpeedOption {
     
@@ -164,51 +147,17 @@
     [self addChild:self.durationValueRemoveBcg];
 }
 
-- (void)prepareTitleAndBackToMainMenu {
-    self.backToMainMenu.fontName = @"3Dventure";
-    self.optionsTitle.fontName = @"3Dventure";
-    
-    self.backToMainMenu.position = self.bottomBck.position;
-    [self.optionsTitle stackLetterByLetterFromString:@"OPTIONS" withCompletion:nil];
-    [self.backToMainMenu addBackgroundWithColor:[UIColor labelBackgroundColor] animate:NO duration:0];
-    
-    self.backToMainMenuBcg = [SKSpriteNode spriteNodeWithTexture:nil size:[self.backToMainMenu sizeWithScaleFactor:2.5]];
-    self.backToMainMenuBcg.position = self.backToMainMenu.position;
-    [self addChild:self.backToMainMenuBcg];
-}
-
-#pragma mark - Video Background
-
-- (void)setupVideoBackground {
-    self.videoBackgroundNode = [[GameManager sharedManager] videoBackgroundNode];
-    self.videoBackgroundNode.size = CGSizeMake(self.frame.size.height, self.frame.size.width);
-    [self addChild:self.videoBackgroundNode];
-    
-    for (SKNode *node in self.children) {
-        if (![node isEqual:self.videoBackgroundNode]) {
-            [node removeFromParent];
-            [self addChild:node];
-        }
-    }
-    
-    Options __weak *weakSelf = self;
-    SKAction *fadeInAction = [SKAction fadeAlphaTo:0.8 duration:0.2];
-    [self.videoBackgroundNode runAction:fadeInAction completion:^{
-        SKAction *colorizeAction = [SKAction colorizeWithColor:[UIColor labelBackgroundColor] colorBlendFactor:1 duration:0.8];
-        [weakSelf runAction:colorizeAction];
-    }];
-}
-
 #pragma mark - User Input Handling
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    
     CGPoint touchPoint = [touches.anyObject locationInNode:self];
     SKNode *touchedNode = [self nodeAtPoint:touchPoint];
     
     [self hitTestSpeedControlsWithTouchedNode:touchedNode];
     [self hitTestDifficultyControlsWithTouchedNode:touchedNode];
     [self hitTestDurationControlsWithTouchedNode:touchedNode];
-    [self hitTestBackToMainMenuWithTouchedNode:touchedNode];
 }
 
 #pragma mark - User Input Helper Methods
@@ -254,26 +203,6 @@
              [touchedNode isEqualToNode:self.durationValueRemoveBcg]) {
         [[GameManager sharedManager] makeDurationOptionGoDownIfPossible];
         [self.durationValueRemove makeControlPopWithCompletion:nil];
-    }
-}
-
-- (void)hitTestBackToMainMenuWithTouchedNode:(SKNode *)touchedNode {
-    Options __weak *weakSelf = self;
-    
-    if ([touchedNode isEqualToNode:self.backToMainMenu] ||
-        [touchedNode isEqualToNode:self.backToMainMenuBcg]) {
-        [self.backToMainMenu makeControlPopWithCompletion:^{
-            
-            SKAction *colorizeAction = [SKAction colorizeWithColor:[UIColor blackColor] colorBlendFactor:1 duration:0.8];
-            [weakSelf runAction:colorizeAction completion:^{
-                
-                SKAction *fadeOut = [SKAction fadeOutWithDuration:0.2];
-                [weakSelf.videoBackgroundNode runAction:fadeOut completion:^{
-                    [weakSelf.videoBackgroundNode removeFromParent];
-                    [[GameManager sharedManager] loadMainMenuSceneWithEntranceAnimationsEnabled:NO];
-                }];
-            }];
-        }];
     }
 }
 

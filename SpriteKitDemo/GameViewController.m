@@ -16,7 +16,7 @@
     [super viewDidLoad];
 
     [[GameManager sharedManager] setSpriteKitView:(SKView *)self.view];
-    [[GameManager sharedManager] loadIntroScene];
+    [[GameManager sharedManager] loadMainMenuSceneWithEntranceAnimationsEnabled:YES];
 }
 
 - (BOOL)shouldAutorotate {

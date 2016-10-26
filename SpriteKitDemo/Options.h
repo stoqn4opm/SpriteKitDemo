@@ -7,7 +7,8 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "NavigationScene.h"
 
-@interface Options : SKScene
+@interface Options : NavigationScene
 
 @end

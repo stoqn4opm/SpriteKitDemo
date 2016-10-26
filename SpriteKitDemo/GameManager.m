@@ -75,8 +75,8 @@ NSString const * OptionsChangedDuration = @"optionsChangedDuration";
 }
 
 - (void)loadLevelSelectScene {
-    SKScene *gameOverScene = [SKScene nodeWithFileNamed:@"LevelSelect"];
-    [self loadScene:gameOverScene];
+    SKScene *levelSelectScene = [SKScene nodeWithFileNamed:@"LevelSelect"];
+    [self loadScene:levelSelectScene];
 }
 
 - (void)loadMainMenuSceneWithEntranceAnimationsEnabled:(BOOL)animationsEnabled {
