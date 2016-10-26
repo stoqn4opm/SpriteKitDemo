@@ -18,4 +18,6 @@
 + (UIColor *)backgroundColor;
 + (UIColor *)optionsHeadingColor;
 + (UIColor *)labelBackgroundColor;
++ (UIColor *)levelListBackgroundColor;
+
 @end

@@ -14,6 +14,7 @@
 		323AD7791DB91DA800E1C90C /* UIColor+AppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 323AD7781DB91DA800E1C90C /* UIColor+AppColors.m */; };
 		3246741F1DC0C5C9009EC784 /* RootNavigationScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3246741E1DC0C5C9009EC784 /* RootNavigationScene.m */; };
 		324674221DC0D1D0009EC784 /* NavigationScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 324674211DC0D1D0009EC784 /* NavigationScene.m */; };
+		3246742B1DC0ED40009EC784 /* LevelEntryRowNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3246742A1DC0ED40009EC784 /* LevelEntryRowNode.m */; };
 		32565A361DB0D47E0063B6FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A351DB0D47E0063B6FD /* main.m */; };
 		32565A391DB0D47E0063B6FD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A381DB0D47E0063B6FD /* AppDelegate.m */; };
 		32565A3B1DB0D47E0063B6FD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32565A3A1DB0D47E0063B6FD /* GameScene.sks */; };
@@ -50,6 +51,8 @@
 		3246741E1DC0C5C9009EC784 /* RootNavigationScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootNavigationScene.m; sourceTree = "<group>"; };
 		324674201DC0D1D0009EC784 /* NavigationScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationScene.h; sourceTree = "<group>"; };
 		324674211DC0D1D0009EC784 /* NavigationScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationScene.m; sourceTree = "<group>"; };
+		324674291DC0ED40009EC784 /* LevelEntryRowNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelEntryRowNode.h; sourceTree = "<group>"; };
+		3246742A1DC0ED40009EC784 /* LevelEntryRowNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelEntryRowNode.m; sourceTree = "<group>"; };
 		32565A311DB0D47E0063B6FD /* SpriteKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32565A351DB0D47E0063B6FD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32565A371DB0D47E0063B6FD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -111,12 +114,11 @@
 			children = (
 				324674271DC0E98E009EC784 /* Base SKScenes */,
 				32F672EE1DBFAD0B0020A591 /* Intro */,
-				32F672EB1DBFA3240020A591 /* Level Select */,
 				32565A5E1DB121550063B6FD /* Main Menu */,
 				32565A5A1DB11BAF0063B6FD /* Game Over */,
-				32565A561DB11B230063B6FD /* Game Level */,
 				323AD7691DB8CD7500E1C90C /* Options */,
-				325833931DB4F18100D1B154 /* Dynamic Level */,
+				32F672EB1DBFA3240020A591 /* Level Select */,
+				324674281DC0EAB3009EC784 /* Game Levels */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -175,6 +177,15 @@
 				324674211DC0D1D0009EC784 /* NavigationScene.m */,
 			);
 			name = "Base SKScenes";
+			sourceTree = "<group>";
+		};
+		324674281DC0EAB3009EC784 /* Game Levels */ = {
+			isa = PBXGroup;
+			children = (
+				32565A561DB11B230063B6FD /* Game Level */,
+				325833931DB4F18100D1B154 /* Dynamic Level */,
+			);
+			name = "Game Levels";
 			sourceTree = "<group>";
 		};
 		32565A281DB0D47E0063B6FD = {
@@ -261,6 +272,8 @@
 				32F672EC1DBFA3590020A591 /* LevelSelect.sks */,
 				32F673121DBFBFEB0020A591 /* LevelSelect.h */,
 				32F673131DBFBFEB0020A591 /* LevelSelect.m */,
+				324674291DC0ED40009EC784 /* LevelEntryRowNode.h */,
+				3246742A1DC0ED40009EC784 /* LevelEntryRowNode.m */,
 			);
 			name = "Level Select";
 			sourceTree = "<group>";
@@ -366,6 +379,7 @@
 				32565A431DB0D47E0063B6FD /* GameViewController.m in Sources */,
 				323AD7791DB91DA800E1C90C /* UIColor+AppColors.m in Sources */,
 				323AD76F1DB8E27100E1C90C /* Options.m in Sources */,
+				3246742B1DC0ED40009EC784 /* LevelEntryRowNode.m in Sources */,
 				324674221DC0D1D0009EC784 /* NavigationScene.m in Sources */,
 				32565A391DB0D47E0063B6FD /* AppDelegate.m in Sources */,
 				32F673111DBFB54A0020A591 /* Intro.m in Sources */,
