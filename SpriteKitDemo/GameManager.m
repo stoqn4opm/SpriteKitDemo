@@ -64,13 +64,18 @@ NSString const * OptionsChangedDuration = @"optionsChangedDuration";
     [self loadScene:introScene];
 }
 
-- (void)loadLevelScene {
+- (void)loadSimpleLevelScene {
     SKScene *gameScene = [SKScene nodeWithFileNamed:@"GameScene"];
     [self loadScene:gameScene];
 }
 
 - (void)loadGameOverScene {
     SKScene *gameOverScene = [SKScene nodeWithFileNamed:@"GameOverScene"];
+    [self loadScene:gameOverScene];
+}
+
+- (void)loadLevelSelectScene {
+    SKScene *gameOverScene = [SKScene nodeWithFileNamed:@"LevelSelect"];
     [self loadScene:gameOverScene];
 }
 

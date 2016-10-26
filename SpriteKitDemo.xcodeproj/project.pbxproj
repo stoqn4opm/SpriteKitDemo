@@ -12,6 +12,7 @@
 		323AD7711DB8E28900E1C90C /* Options.sks in Resources */ = {isa = PBXBuildFile; fileRef = 323AD7701DB8E28900E1C90C /* Options.sks */; };
 		323AD7731DB91D0600E1C90C /* colorPallete.png in Resources */ = {isa = PBXBuildFile; fileRef = 323AD7721DB91D0600E1C90C /* colorPallete.png */; };
 		323AD7791DB91DA800E1C90C /* UIColor+AppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 323AD7781DB91DA800E1C90C /* UIColor+AppColors.m */; };
+		3246741F1DC0C5C9009EC784 /* RootNavigatonScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3246741E1DC0C5C9009EC784 /* RootNavigatonScene.m */; };
 		32565A361DB0D47E0063B6FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A351DB0D47E0063B6FD /* main.m */; };
 		32565A391DB0D47E0063B6FD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32565A381DB0D47E0063B6FD /* AppDelegate.m */; };
 		32565A3B1DB0D47E0063B6FD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32565A3A1DB0D47E0063B6FD /* GameScene.sks */; };
@@ -32,6 +33,7 @@
 		32F672ED1DBFA3590020A591 /* LevelSelect.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32F672EC1DBFA3590020A591 /* LevelSelect.sks */; };
 		32F672F01DBFAD850020A591 /* Intro.sks in Resources */ = {isa = PBXBuildFile; fileRef = 32F672EF1DBFAD850020A591 /* Intro.sks */; };
 		32F673111DBFB54A0020A591 /* Intro.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F673101DBFB54A0020A591 /* Intro.m */; };
+		32F673141DBFBFEB0020A591 /* LevelSelect.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F673131DBFBFEB0020A591 /* LevelSelect.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		323AD7721DB91D0600E1C90C /* colorPallete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colorPallete.png; sourceTree = "<group>"; };
 		323AD7771DB91DA800E1C90C /* UIColor+AppColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppColors.h"; sourceTree = "<group>"; };
 		323AD7781DB91DA800E1C90C /* UIColor+AppColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppColors.m"; sourceTree = "<group>"; };
+		3246741D1DC0C5C9009EC784 /* RootNavigatonScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootNavigatonScene.h; sourceTree = "<group>"; };
+		3246741E1DC0C5C9009EC784 /* RootNavigatonScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootNavigatonScene.m; sourceTree = "<group>"; };
 		32565A311DB0D47E0063B6FD /* SpriteKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32565A351DB0D47E0063B6FD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32565A371DB0D47E0063B6FD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -74,6 +78,8 @@
 		32F672EF1DBFAD850020A591 /* Intro.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Intro.sks; sourceTree = "<group>"; };
 		32F6730F1DBFB54A0020A591 /* Intro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Intro.h; sourceTree = "<group>"; };
 		32F673101DBFB54A0020A591 /* Intro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Intro.m; sourceTree = "<group>"; };
+		32F673121DBFBFEB0020A591 /* LevelSelect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelSelect.h; sourceTree = "<group>"; };
+		32F673131DBFBFEB0020A591 /* LevelSelect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelSelect.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,8 @@
 		323AD76A1DB8CD9800E1C90C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				3246741D1DC0C5C9009EC784 /* RootNavigatonScene.h */,
+				3246741E1DC0C5C9009EC784 /* RootNavigatonScene.m */,
 				32F672EE1DBFAD0B0020A591 /* Intro */,
 				32F672EB1DBFA3240020A591 /* Level Select */,
 				32565A5E1DB121550063B6FD /* Main Menu */,
@@ -206,6 +214,8 @@
 			isa = PBXGroup;
 			children = (
 				32F672EC1DBFA3590020A591 /* LevelSelect.sks */,
+				32F673121DBFBFEB0020A591 /* LevelSelect.h */,
+				32F673131DBFBFEB0020A591 /* LevelSelect.m */,
 			);
 			name = "Level Select";
 			sourceTree = "<group>";
@@ -305,6 +315,8 @@
 				325833961DB4F1A600D1B154 /* DynamicLevelScene.m in Sources */,
 				3269CB101DBE309300F59A59 /* SKLabelNode+Background.m in Sources */,
 				32565A591DB11BA60063B6FD /* GameOverScene.m in Sources */,
+				3246741F1DC0C5C9009EC784 /* RootNavigatonScene.m in Sources */,
+				32F673141DBFBFEB0020A591 /* LevelSelect.m in Sources */,
 				32565A5D1DB11D060063B6FD /* GameManager.m in Sources */,
 				32565A431DB0D47E0063B6FD /* GameViewController.m in Sources */,
 				323AD7791DB91DA800E1C90C /* UIColor+AppColors.m in Sources */,
