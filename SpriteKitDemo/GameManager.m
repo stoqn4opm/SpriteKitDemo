@@ -64,7 +64,7 @@ NSString const * OptionsChangedDuration = @"optionsChangedDuration";
     [self loadScene:introScene];
 }
 
-- (void)loadLevelScene {
+- (void)loadSimpleLevelScene {
     SKScene *gameScene = [SKScene nodeWithFileNamed:@"GameScene"];
     [self loadScene:gameScene];
 }
@@ -72,6 +72,11 @@ NSString const * OptionsChangedDuration = @"optionsChangedDuration";
 - (void)loadGameOverScene {
     SKScene *gameOverScene = [SKScene nodeWithFileNamed:@"GameOverScene"];
     [self loadScene:gameOverScene];
+}
+
+- (void)loadLevelSelectScene {
+    SKScene *levelSelectScene = [SKScene nodeWithFileNamed:@"LevelSelect"];
+    [self loadScene:levelSelectScene];
 }
 
 - (void)loadMainMenuSceneWithEntranceAnimationsEnabled:(BOOL)animationsEnabled {

@@ -22,4 +22,9 @@
     return [UIColor colorWithRed:74/255. green:111/255. blue:184/255. alpha:1];
 }
 
++ (UIColor *)levelListBackgroundColor {
+    return [UIColor colorWithRed:48/255. green:33/255. blue:83/255. alpha:1];
+}
+
+
 @end

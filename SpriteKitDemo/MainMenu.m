@@ -24,10 +24,9 @@
 @property (nonatomic, strong) SKLabelNode *optionNode;
 @property (nonatomic, strong) SKSpriteNode *optionBckgNode;
 
-@property (nonatomic, strong) SKVideoNode *videoBackgroundNode;
-
 @property (nonatomic, strong) NSDate *entranceAnimationsStartTime;
 @property (nonatomic, assign) BOOL entranceAnimationsAlreadySkipped;
+@property (nonatomic, assign) BOOL screenAlreadyFlashed;
 @end
 
 @implementation MainMenu
@@ -35,6 +34,8 @@
 #pragma mark - Initialization Code
 
 -(void)didMoveToView:(SKView *)view {
+    [super didMoveToView:view];
+   
     self.titleNode = (SKLabelNode *)[self childNodeWithName:@"gameTitle"];
     self.titleSecondNode = (SKLabelNode *)[self childNodeWithName:@"gameTitleSecond"];
     
@@ -48,8 +49,6 @@
     self.startGameNode.fontName = @"3Dventure";
     self.optionNode.fontName = @"3Dventure";
     
-    [self setupVideoBackground];
-    
     if (self.enableEntranceAnimations) {
         [self executeGameTitleAnimation];
     } else {
@@ -61,80 +60,52 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
+    if (!self.entranceAnimationsAlreadySkipped) {
+        
+        NSDate *now = [NSDate date];
+        BOOL nowIsBeforeEntranceAnimationsAreCompleted =
+        [now timeIntervalSinceDate:self.entranceAnimationsStartTime] < MAIN_MENU_ENTRANCE_ANIMATIONS_DURATION;
+        
+        if (nowIsBeforeEntranceAnimationsAreCompleted) {
+            [self handleAnimationsSkipTouch];
+            return;
+        }
+    }
+    
     MainMenu __weak  *weakSelf = self;
     
     CGPoint touchPoint = [touches.anyObject locationInNode:self];
     SKNode *touchedNode = [self nodeAtPoint:touchPoint];
     
-    if ([touchedNode isEqualToNode:self.startGameNode] ||
-        [touchedNode isEqualToNode:self.startGameBckgNode]) {
-        [self.startGameNode makeControlPopWithCompletion:^{
-            [[GameManager sharedManager] loadDynamicLevelScene];
-        }];
-    }
-    else if ([touchedNode isEqualToNode:self.optionNode] ||
-             [touchedNode isEqualToNode:self.optionBckgNode]) {
-        [self.optionNode makeControlPopWithCompletion:^{
-            
-            SKAction *colorizeAction = [SKAction colorizeWithColor:[UIColor blackColor] colorBlendFactor:1 duration:0.8];
-            [weakSelf runAction:colorizeAction completion:^{
-                
-                SKAction *fadeOut = [SKAction fadeOutWithDuration:0.2];
-                [weakSelf.videoBackgroundNode runAction:fadeOut completion:^{
-                    [weakSelf.videoBackgroundNode removeFromParent];
-                    [[GameManager sharedManager] loadOptionsScene];
-                }];
+    [self hitTestNodes:@[self.startGameNode, self.startGameBckgNode] withTouchedNode:touchedNode withYESHandler:^{
+        [weakSelf.startGameNode makeControlPopWithCompletion:^{
+            [weakSelf fadeOutVideoBackgroundWithCompletion:^{
+                [weakSelf.videoBackgroundNode removeFromParent];
+                [[GameManager sharedManager] loadLevelSelectScene];
             }];
         }];
-    } else {
-        [self handleAnimationsSkipTouch];
-    }
+    }];
+    
+    [self hitTestNodes:@[self.optionNode, self.optionBckgNode] withTouchedNode:touchedNode withYESHandler:^{
+        [self.optionNode makeControlPopWithCompletion:^{
+            [weakSelf fadeOutVideoBackgroundWithCompletion:^{
+                [weakSelf.videoBackgroundNode removeFromParent];
+                [[GameManager sharedManager] loadOptionsScene];
+            }];
+        }];
+    }];
 }
 
 - (void)handleAnimationsSkipTouch {
-    NSDate *now = [NSDate date];
-    BOOL nowIsBeforeEntranceAnimationsAreCompleted =
-    [now timeIntervalSinceDate:self.entranceAnimationsStartTime] < MAIN_MENU_ENTRANCE_ANIMATIONS_DURATION;
-    
-    if (nowIsBeforeEntranceAnimationsAreCompleted && !self.entranceAnimationsAlreadySkipped) {
         
-        self.entranceAnimationsAlreadySkipped = YES;
-        
-        [self flashScreenWithCompletion:^{
-            [self presentControlsWithNoAnimation];
-        }];
-    }
-}
-
-#pragma mark - Video Background
-
-- (void)setupVideoBackground {
-    self.videoBackgroundNode = [[GameManager sharedManager] videoBackgroundNode];
-    self.videoBackgroundNode.size = CGSizeMake(self.frame.size.height, self.frame.size.width);
-    [self addChild:self.videoBackgroundNode];
+    self.entranceAnimationsAlreadySkipped = YES;
     
-    [self.titleNode removeFromParent];
-    [self addChild:self.titleNode];
-    
-    [self.titleSecondNode removeFromParent];
-    [self addChild:self.titleSecondNode];
+    [self flashScreenWithCompletion:^{
+        [self presentControlsWithNoAnimation];
+    }];
 }
 
 #pragma mark - Animations
-
-- (void)presentControlsWithNoAnimation {
-    
-    for (SKNode *node in self.children) {
-        [node removeAllActions];
-    }
-    self.titleNode.text = GAME_TITLE;
-    self.titleNode.position = CGPointMake(0, 407.6879);
-    self.titleNode.xScale = self.titleNode.yScale = 1.305;
-    self.titleSecondNode.text = GAME_TITLE_SECOND_LINE;
-    self.titleSecondNode.alpha = 1;
-    self.titleSecondNode.position = CGPointMake(0, 200);
-    [self showControls];
-}
 
 - (void)executeGameTitleAnimation {
     MainMenu __weak *weakSelf = self;
@@ -144,6 +115,7 @@
     [self.titleNode stackLetterByLetterFromString:GAME_TITLE withCompletion:^{
         [weakSelf scaleUpAndMoveDownGameTitleWithCompletion:^{
             [weakSelf presentSecondLineWithCompletionWithCompletion:^{
+                self.entranceAnimationsAlreadySkipped = YES;
                 [weakSelf flashScreenWithCompletion:^{
                     [weakSelf showControls];
                 }];
@@ -175,42 +147,50 @@
 }
 
 - (void)flashScreenWithCompletion:(void (^)())completionBlock {
-    SKSpriteNode *flashNode = [SKSpriteNode spriteNodeWithColor:[UIColor whiteColor] size:self.frame.size];
-    SKAction *fadeInAction = [SKAction fadeInWithDuration:0.3];
-    SKAction *fadeOutAction = [SKAction fadeOutWithDuration:0.3];
-    SKAction *removeAction = [SKAction removeFromParent];
+    if (self.screenAlreadyFlashed) {
+        return;
+    }
     
-    [self addChild:flashNode];
-    [flashNode runAction:[SKAction sequence:@[fadeInAction, fadeOutAction, removeAction]] completion:completionBlock];
+    self.screenAlreadyFlashed = YES;
+    SKAction *colorizeToWhite = [SKAction colorizeWithColor:[UIColor whiteColor] colorBlendFactor:1 duration:0.3];
+    SKAction *colorizeToBlack = [SKAction colorizeWithColor:[UIColor blackColor] colorBlendFactor:1 duration:0.3];
+    SKAction *flash = [SKAction sequence:@[colorizeToWhite, colorizeToBlack]];
+    
+    [self runAction:flash completion:completionBlock];
 }
 
-- (void)showControlsWithCompletion:(void (^)())completionBlock {
+- (void)showControls {
+    MainMenu __weak *weakSelf = self;
+    
     SKAction *fadeInAction = [SKAction fadeInWithDuration:0.8];
     [self.startGameNode runAction:fadeInAction completion:^{
         [self.startGameNode addBackgroundWithColor:[UIColor labelBackgroundColor] animate:YES duration:1];
-        if (completionBlock) {
-            completionBlock();
-        }
+         [weakSelf fadeInVideoBackgroundWithCompletion:nil];
     }];
     
     [self.optionNode runAction:fadeInAction completion:^{
         [self.optionNode addBackgroundWithColor:[UIColor labelBackgroundColor] animate:YES duration:1];
     }];
+    
+        self.titleNode.alpha = 1;
+        self.titleSecondNode.alpha = 1;
 }
 
-- (void)showControls {
-    MainMenu __weak *weakSelf = self;
-    [weakSelf showControlsWithCompletion:^{
-        
-        [weakSelf.videoBackgroundNode setPaused:NO];
-        
-        SKAction *fadeInVideo = [SKAction fadeAlphaTo:0.8 duration:2];
-        [weakSelf.videoBackgroundNode runAction:fadeInVideo completion:^{
-            
-            SKAction *colorizeAction = [SKAction colorizeWithColor:[UIColor labelBackgroundColor] colorBlendFactor:1 duration:0.8];
-            [weakSelf runAction:colorizeAction];
-        }];
-        
-    }];
+- (void)presentControlsWithNoAnimation {
+    
+    for (SKNode *node in self.children) {
+        [node removeAllActions];
+    }
+    self.titleNode.text = GAME_TITLE;
+    self.titleNode.position = CGPointMake(0, 407.6879);
+    self.titleNode.xScale = self.titleNode.yScale = 1.305;
+    self.titleSecondNode.text = GAME_TITLE_SECOND_LINE;
+    self.titleSecondNode.position = CGPointMake(0, 200);
+    SKAction *fadeInAction = [SKAction fadeInWithDuration:0.8];
+    [self.titleNode runAction:fadeInAction];
+    [self.titleSecondNode runAction:fadeInAction];
+
+    [self showControls];
 }
+
 @end
