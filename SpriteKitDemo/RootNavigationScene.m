@@ -20,8 +20,31 @@
     }
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+#pragma mark - User Input Handling
+
+- (void)hitTestNodes:(NSArray<SKNode *> *)entries withTouchedNode:(SKNode *)node withYESHandler:(void (^)())completionBlock {
     
+    for (SKNode *currentNode in entries) {
+        if ([self isNode:node equalToNodeOrSomeChild:currentNode]) {
+            if (completionBlock) {
+                completionBlock();
+            }
+            return;
+        }
+    }
+}
+
+- (BOOL)isNode:(SKNode *)firstNode equalToNodeOrSomeChild:(SKNode *)secondNode {
+    if ([firstNode isEqualToNode:secondNode]) {
+        return YES;
+    }
+    
+    for (SKNode *child in secondNode.children) {
+        if ([firstNode isEqualToNode:child]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 #pragma mark - Video Background

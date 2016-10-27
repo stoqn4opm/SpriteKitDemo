@@ -163,47 +163,43 @@
 #pragma mark - User Input Helper Methods
 
 - (void)hitTestSpeedControlsWithTouchedNode:(SKNode *)touchedNode {
-    
-    if ([touchedNode isEqualToNode:self.speedSlowLabel] ||
-        [touchedNode isEqualToNode:self.speedSlowBcg]) {
+    [self hitTestNodes:@[self.speedSlowLabel, self.speedSlowBcg] withTouchedNode:touchedNode withYESHandler:^{
         [[GameManager sharedManager] setLevelSpeedOption:LevelSpeedSlow];
-    }
-    else if ([touchedNode isEqualToNode:self.speedNormalLabel] ||
-             [touchedNode isEqualToNode:self.speedNormalBcg]) {
+    }];
+    
+    [self hitTestNodes:@[self.speedNormalLabel, self.speedNormalBcg] withTouchedNode:touchedNode withYESHandler:^{
         [[GameManager sharedManager] setLevelSpeedOption:LevelSpeedNormal];
-    }
-    else if ([touchedNode isEqualToNode:self.speedFastLabel] ||
-             [touchedNode isEqualToNode:self.speedFastBcg]) {
+    }];
+    
+    [self hitTestNodes:@[self.speedFastLabel, self.speedFastBcg] withTouchedNode:touchedNode withYESHandler:^{
         [[GameManager sharedManager] setLevelSpeedOption:LevelSpeedFast];
-    }
+    }];
 }
 
 - (void)hitTestDifficultyControlsWithTouchedNode:(SKNode *)touchedNode {
     
-    if ([touchedNode isEqualToNode:self.difficultyLevelValueAdd] ||
-        [touchedNode isEqualToNode:self.difficultyLevelValueAddBcg]) {
+    [self hitTestNodes:@[self.difficultyLevelValueAdd, self.difficultyLevelValueAddBcg] withTouchedNode:touchedNode withYESHandler:^{
         [[GameManager sharedManager] makeDifficultyOptionGoUpIfPossible];
         [self.difficultyLevelValueAdd makeControlPopWithCompletion:nil];
-    }
-    else if ([touchedNode isEqualToNode:self.difficultyLevelValueRemove] ||
-             [touchedNode isEqualToNode:self.difficultyLevelValueRemoveBcg]) {
+    }];
+    
+    [self hitTestNodes:@[self.difficultyLevelValueRemove, self.difficultyLevelValueRemoveBcg] withTouchedNode:touchedNode withYESHandler:^{
         [[GameManager sharedManager] makeDifficultyOptionGoDownIfPossible];
         [self.difficultyLevelValueRemove makeControlPopWithCompletion:nil];
-    }
+    }];
 }
 
 - (void)hitTestDurationControlsWithTouchedNode:(SKNode *)touchedNode {
     
-    if ([touchedNode isEqualToNode:self.durationValueAdd] ||
-        [touchedNode isEqualToNode:self.durationValueAddBcg]) {
+    [self hitTestNodes:@[self.durationValueAdd, self.durationValueAddBcg] withTouchedNode:touchedNode withYESHandler:^{
         [[GameManager sharedManager] makeDurationOptionGoUpIfPossible];
         [self.durationValueAdd makeControlPopWithCompletion:nil];
-    }
-    else if ([touchedNode isEqualToNode:self.durationValueRemove] ||
-             [touchedNode isEqualToNode:self.durationValueRemoveBcg]) {
+    }];
+    
+    [self hitTestNodes:@[self.durationValueRemove, self.durationValueRemoveBcg] withTouchedNode:touchedNode withYESHandler:^{
         [[GameManager sharedManager] makeDurationOptionGoDownIfPossible];
         [self.durationValueRemove makeControlPopWithCompletion:nil];
-    }
+    }];
 }
 
 #pragma mark - UI Update

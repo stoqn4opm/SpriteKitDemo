@@ -9,6 +9,13 @@
 #import "LevelSelect.h"
 #import "LevelEntryRowNode.h"
 
+@interface LevelSelect()
+
+@property (strong, nonatomic) LevelEntryRowNode *firstLevelNode;
+@property (strong, nonatomic) LevelEntryRowNode *secondLevelNode;
+
+@end
+
 @implementation LevelSelect
 
 #pragma mark - Initialization
@@ -29,11 +36,11 @@
 }
 
 - (void)setupLevelListEntries {
-    LevelEntryRowNode *firstLevelEntryNode = (LevelEntryRowNode *)[self childNodeWithName:@"levelEntyRowNode1"];
-    [firstLevelEntryNode configureWithNumberEntry:@1 textEntry:@"Static"];
+    self.firstLevelNode = (LevelEntryRowNode *)[self childNodeWithName:@"levelEntyRowNode1"];
+    [self.firstLevelNode configureWithNumberEntry:@1 textEntry:@"Static"];
     
-    LevelEntryRowNode *secondLevelEntryNode = (LevelEntryRowNode *)[self childNodeWithName:@"levelEntyRowNode2"];
-    [secondLevelEntryNode configureWithNumberEntry:@2 textEntry:@"Dynamic"];
+    self.secondLevelNode = (LevelEntryRowNode *)[self childNodeWithName:@"levelEntyRowNode2"];
+    [self.secondLevelNode configureWithNumberEntry:@2 textEntry:@"Dynamic"];
 }
 
 #pragma mark - User Input
@@ -44,37 +51,12 @@
     CGPoint touchPoint = [touches.anyObject locationInNode:self];
     SKNode *touchedNode = [self nodeAtPoint:touchPoint];
     
-    [self hitTestFirstEntryWithTouchedNode:touchedNode];
-    [self hitSecondEntryWithTouchedNode:touchedNode];
-}
-
-- (void)hitTestFirstEntryWithTouchedNode:(SKNode *)node {
-    LevelEntryRowNode *firstLevelEntryNode = (LevelEntryRowNode *)[self childNodeWithName:@"levelEntyRowNode1"];
-    if ([self isNode:node equalToNodeOrSomeChild:firstLevelEntryNode]) {
+    [self hitTestNodes:@[self.firstLevelNode] withTouchedNode:touchedNode withYESHandler:^{
         [[GameManager sharedManager] loadSimpleLevelScene];
-    }
-}
-
-- (void)hitSecondEntryWithTouchedNode:(SKNode *)node {
-    LevelEntryRowNode *secondLevelEntryNode = (LevelEntryRowNode *)[self childNodeWithName:@"levelEntyRowNode2"];
-    if ([self isNode:node equalToNodeOrSomeChild:secondLevelEntryNode]) {
+    }];
+    [self hitTestNodes:@[self.secondLevelNode] withTouchedNode:touchedNode withYESHandler:^{
         [[GameManager sharedManager] loadDynamicLevelScene];
-    }
-}
-
-#pragma mark - Helper Methods
-
-- (BOOL)isNode:(SKNode *)firstNode equalToNodeOrSomeChild:(SKNode *)secondNode {
-    if ([firstNode isEqualToNode:secondNode]) {
-        return YES;
-    }
-    
-    for (SKNode *child in secondNode.children) {
-        if ([firstNode isEqualToNode:child]) {
-            return YES;
-        }
-    }
-    return NO;
+    }];
 }
 
 @end

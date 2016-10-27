@@ -12,6 +12,10 @@
 @interface RootNavigationScene : SKScene
 
 @property (nonatomic, strong) SKVideoNode *videoBackgroundNode;
+
+- (void)hitTestNodes:(NSArray<SKNode *> *)entries withTouchedNode:(SKNode *)node withYESHandler:(void (^)())completionBlock;
+
 - (void)fadeOutVideoBackgroundWithCompletion:(void (^)())completionBlock;
 - (void)fadeInVideoBackgroundWithCompletion:(void (^)())completionBlock;
+
 @end
