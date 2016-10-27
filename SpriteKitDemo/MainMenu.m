@@ -60,19 +60,22 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
+    if (!self.entranceAnimationsAlreadySkipped) {
+        
+        NSDate *now = [NSDate date];
+        BOOL nowIsBeforeEntranceAnimationsAreCompleted =
+        [now timeIntervalSinceDate:self.entranceAnimationsStartTime] < MAIN_MENU_ENTRANCE_ANIMATIONS_DURATION;
+        
+        if (nowIsBeforeEntranceAnimationsAreCompleted) {
+            [self handleAnimationsSkipTouch];
+            return;
+        }
+    }
+    
     MainMenu __weak  *weakSelf = self;
     
     CGPoint touchPoint = [touches.anyObject locationInNode:self];
     SKNode *touchedNode = [self nodeAtPoint:touchPoint];
-    
-    NSDate *now = [NSDate date];
-    BOOL nowIsBeforeEntranceAnimationsAreCompleted =
-    [now timeIntervalSinceDate:self.entranceAnimationsStartTime] < MAIN_MENU_ENTRANCE_ANIMATIONS_DURATION;
-    
-    if (nowIsBeforeEntranceAnimationsAreCompleted && !self.entranceAnimationsAlreadySkipped) {
-        [self handleAnimationsSkipTouch];
-        return;
-    }
     
     [self hitTestNodes:@[self.startGameNode, self.startGameBckgNode] withTouchedNode:touchedNode withYESHandler:^{
         [weakSelf.startGameNode makeControlPopWithCompletion:^{
@@ -174,7 +177,7 @@
 }
 
 - (void)presentControlsWithNoAnimation {
-#warning m
+    
     for (SKNode *node in self.children) {
         [node removeAllActions];
     }
