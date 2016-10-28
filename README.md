@@ -8,3 +8,5 @@ It's written in Objective C, Xcode 8.0.
 pixelated font name : 3Dventure
 http://www.dafont.com/3dventure.font
 
+video background:
+https://www.youtube.com/watch?v=K4cejv0SVlQ
